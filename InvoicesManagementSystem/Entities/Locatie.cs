@@ -10,7 +10,11 @@ namespace InvoicesManagementSystem.Entities
     {
         [Key]
         public int IdLocatie { get; set; }
+
+        [Required]
         public string Nume { get; set; }
+
+        [Required]
         public string Adresa { get; set; }
         public ICollection<Factura> Facturi { get; set; }
         public ICollection<DetaliiFactura> DetaliiFacturi { get; set; }

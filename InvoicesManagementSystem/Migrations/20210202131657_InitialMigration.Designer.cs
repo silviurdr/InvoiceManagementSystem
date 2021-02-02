@@ -4,14 +4,16 @@ using InvoicesManagementSystem.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace InvoicesManagementSystem.Migrations
+namespace InvoiceManagementSystem.Migrations
 {
-    [DbContext(typeof(InvoicesManagementContext))]
-    partial class InvoicesManagementContextModelSnapshot : ModelSnapshot
+    [DbContext(typeof(InvoiceManagementContext))]
+    [Migration("20210202131657_InitialMigration")]
+    partial class InitialMigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -34,6 +36,7 @@ namespace InvoicesManagementSystem.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("NumeProdus")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<decimal>("PretUnitar")
@@ -64,9 +67,11 @@ namespace InvoicesManagementSystem.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("NumarFactura")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("NumeClient")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("IdFactura", "IdLocatie");
@@ -84,9 +89,11 @@ namespace InvoicesManagementSystem.Migrations
                         .UseIdentityColumn();
 
                     b.Property<string>("Adresa")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Nume")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("IdLocatie");
@@ -96,10 +103,10 @@ namespace InvoicesManagementSystem.Migrations
 
             modelBuilder.Entity("InvoicesManagementSystem.Entities.DetaliiFactura", b =>
                 {
-                    b.HasOne("InvoicesManagementSystem.Entities.Locatie", null)
+                    b.HasOne("InvoicesManagementSystem.Entities.Locatie", "Locatie")
                         .WithMany("DetaliiFacturi")
                         .HasForeignKey("IdLocatie")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("InvoicesManagementSystem.Entities.Factura", "Factura")
@@ -109,6 +116,8 @@ namespace InvoicesManagementSystem.Migrations
                         .IsRequired();
 
                     b.Navigation("Factura");
+
+                    b.Navigation("Locatie");
                 });
 
             modelBuilder.Entity("InvoicesManagementSystem.Entities.Factura", b =>

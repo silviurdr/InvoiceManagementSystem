@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace InvoicesManagementSystem.Migrations
+namespace InvoiceManagementSystem.Migrations
 {
     public partial class InitialMigration : Migration
     {
@@ -13,8 +13,8 @@ namespace InvoicesManagementSystem.Migrations
                 {
                     IdLocatie = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Nume = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Adresa = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    Nume = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Adresa = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -27,9 +27,9 @@ namespace InvoicesManagementSystem.Migrations
                 {
                     IdFactura = table.Column<int>(type: "int", nullable: false),
                     IdLocatie = table.Column<int>(type: "int", nullable: false),
-                    NumarFactura = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    NumarFactura = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     DataFactura = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    NumeClient = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    NumeClient = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -48,7 +48,7 @@ namespace InvoicesManagementSystem.Migrations
                 {
                     IdDetaliiFactura = table.Column<int>(type: "int", nullable: false),
                     IdLocatie = table.Column<int>(type: "int", nullable: false),
-                    NumeProdus = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    NumeProdus = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Cantitate = table.Column<decimal>(type: "decimal(18,4)", nullable: false),
                     PretUnitar = table.Column<decimal>(type: "decimal(18,4)", nullable: false),
                     Valoare = table.Column<decimal>(type: "decimal(18,4)", nullable: false),
@@ -68,7 +68,7 @@ namespace InvoicesManagementSystem.Migrations
                         column: x => x.IdLocatie,
                         principalTable: "Locatii",
                         principalColumn: "IdLocatie",
-                        onDelete: ReferentialAction.NoAction);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateIndex(

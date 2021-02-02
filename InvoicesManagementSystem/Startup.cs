@@ -31,7 +31,7 @@ namespace InvoicesManagementSystem
         public void ConfigureServices(IServiceCollection services)
         {
 
-            services.AddDbContextPool<InvoicesManagementContext>(options => options.UseSqlServer(_config.GetConnectionString("InvoicesManagementConnectionString")));
+            services.AddDbContextPool<InvoiceManagementContext>(options => options.UseSqlServer(_config.GetConnectionString("InvoicesManagementConnectionString")));
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {

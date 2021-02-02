@@ -8,9 +8,9 @@ namespace InvoicesManagementSystem.Interfaces
 {
     public interface IFacturaRepository
     {
-        Task<Factura> GetFactura(int id);
-        Task<IEnumerable<Factura>> GetFacturi();
-        Task<Factura> CreateFactura();
+        Task<Factura> GetFacturaAsync(int id);
+        Task<IEnumerable<Factura>> GetFacturiAsync();
+        Task<Factura> CreateFactura(Factura factura);
         void UpdateFactura(Factura factura);
         void DeleteFactura(int id);
         Task<bool> SaveAllAsync();

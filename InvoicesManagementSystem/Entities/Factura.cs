@@ -13,11 +13,13 @@ namespace InvoicesManagementSystem.Entities
         public int IdFactura { get; set; }
 
         public int IdLocatie { get; set; }
-
         public Locatie Locatie { get; set; }
         
+        [Required]
         public string NumarFactura { get; set; }
         public DateTime DataFactura { get; set; }
+
+        [Required]
         public string NumeClient { get; set; }
         public DetaliiFactura DetaliiFactura { get; set; }
 

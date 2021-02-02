@@ -11,7 +11,11 @@ namespace InvoicesManagementSystem.Entities
     {
         [Key]
         public int IdDetaliiFactura { get; set; }
+
         public int IdLocatie { get; set; }
+        public Locatie Locatie { get; set; }
+
+        [Required]
         public string NumeProdus { get; set; }
         [Column(TypeName = "decimal(18,4)")]
         public decimal Cantitate { get; set; }

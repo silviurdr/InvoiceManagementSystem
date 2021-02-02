@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace InvoicesManagementSystem.Data
 {
-    public class InvoicesManagementContext: DbContext
+    public class InvoiceManagementContext: DbContext
     {
-        public InvoicesManagementContext(DbContextOptions<InvoicesManagementContext> options)
+        public InvoiceManagementContext(DbContextOptions<InvoiceManagementContext> options)
             : base(options)
         {
         }
@@ -21,10 +21,22 @@ namespace InvoicesManagementSystem.Data
             modelBuilder.Entity<Factura>()
                 .HasOne(f => f.DetaliiFactura)
                 .WithOne(d => d.Factura)
-                .HasForeignKey<DetaliiFactura>(d => new { d.IdFactura, d.IdLocatie }); 
+                .HasForeignKey<DetaliiFactura>(d => new { d.IdFactura, d.IdLocatie });
+
+            modelBuilder.Entity<Factura>()
+           .HasOne(f => f.Locatie)
+           .WithMany(l => l.Facturi)
+           .HasForeignKey(f => f.IdLocatie);
 
             modelBuilder.Entity<DetaliiFactura>()
                 .HasKey(f => new { f.IdDetaliiFactura, f.IdLocatie });
+
+            modelBuilder.Entity<DetaliiFactura>()
+           .HasOne(d => d.Locatie)
+           .WithMany(l=> l.DetaliiFacturi)
+           .HasForeignKey(d => d.IdLocatie)
+           .OnDelete(DeleteBehavior.Restrict);
+
         }
 
         public DbSet<Factura> Facturi { get; set; }
