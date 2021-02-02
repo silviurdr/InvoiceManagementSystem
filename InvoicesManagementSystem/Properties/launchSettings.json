@@ -9,12 +9,6 @@
     }
   },
   "profiles": {
-    "IIS Express": {
-      "commandName": "IISExpress",
-      "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
-      }
-    },
     "InvoicesManagementSystem": {
       "commandName": "Project",
       "dotnetRunMessages": "true",

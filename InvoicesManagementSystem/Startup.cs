@@ -1,7 +1,9 @@
+using InvoicesManagementSystem.Data;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -16,9 +18,11 @@ namespace InvoicesManagementSystem
 {
     public class Startup
     {
+
+        private IConfiguration _config;
         public Startup(IConfiguration configuration)
         {
-            Configuration = configuration;
+            _config = configuration;
         }
 
         public IConfiguration Configuration { get; }
@@ -27,6 +31,7 @@ namespace InvoicesManagementSystem
         public void ConfigureServices(IServiceCollection services)
         {
 
+            services.AddDbContextPool<InvoicesManagementContext>(options => options.UseSqlServer(_config.GetConnectionString("InvoicesManagementConnectionString")));
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
