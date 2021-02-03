@@ -87,6 +87,9 @@ function _displayItems(data) {
 
     let invoicesContainer = document.getElementById("invoicesContainer");
     invoicesContainer.style.backgroundColor = "whitesmoke";
+    invoicesContainer.style.cursor = "pointer";
+
+ 
 
     const button = document.createElement('button');
 
@@ -145,12 +148,25 @@ function _displayItems(data) {
 
     });
 
+    let allInvoices = tBody.children;
+
+    $("#invoicesTableHeader").css("background", "khaki");
+
     let allTr = document.getElementsByTagName("tr");
+
+    $("#invoices tr ").hover(function () {
+        $(this).css("background", "khaki");
+    },
+        function () {
+            $(this).css("background", "white");
+        });
 
     console.log(allTr);
 
+
     for (tableRow of allTr) {
- 
+
+        console.log(tableRow);
         tableRow.style.height = "70px";
     };
 
