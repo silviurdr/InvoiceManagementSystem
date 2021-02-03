@@ -3,6 +3,8 @@
 let addProductButton = document.getElementById("addProductButton"); 
 let productsTableBody = document.getElementById("productsTableBody");
 let errorMessageProductsForm = document.getElementById("errorMessageProductsForm");
+let cancelFacturaButton = document.getElementById("cancelFacturaButton");
+
 
 
 addProductButton.addEventListener("click", function () {
@@ -49,13 +51,14 @@ addProductButton.addEventListener("click", function () {
 
 function addProducts() {
 
-    
-
     let cantitate = document.getElementById("cantitate");
-
 
     let td2 = tr.insertCell(0);
     let textNode2 = document.createTextNode(cantitate.nodeValue);
     td2.appendChild(textNode2);
 
+}
+
+function goPrev() {
+    window.history.back();
 }
