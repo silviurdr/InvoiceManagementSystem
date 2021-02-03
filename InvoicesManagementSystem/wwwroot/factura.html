@@ -13,11 +13,12 @@
 
     <div class="container col-9 bg-light mt-4 p-0">
         <div class="factura-header-container bg-warning p-3">
-            <h1 class="mt-4 mb-4 text-capitalize font-weight-bolder">Factura
+            <h1 class="mt-4 mb-4 text-capitalize font-weight-bolder">
+                Factura
             </h1>
         </div>
-        
-        <form class="row g-3 p-4 mt-4">
+
+        <div class="row p-4 mt-4">
             <div class="row">
                 <div class="col-md-6">
                     <label for="numarFactura" class="form-label">Numar factura</label>
@@ -29,7 +30,7 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-6">
+                <div class="col-md-6">
                     <label for="dataFactura" class="form-label">Data factura</label>
                     <input type="date" class="form-control" id="dataFactura">
                 </div>
@@ -42,41 +43,31 @@
                         <option value="3">3</option>
                     </select>
                 </div>
-                <div class="col-3">
-                    <label for="cantitate" class="form-label">Cantitate</label>
-                    <select class="form-select form-select-sm" aria-label=".form-select-sm example" id="cantitate">
-                        <option selected>Alege o valoare</option>
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
-                        <option value="4">4</option>
-                        <option value="5">5</option>
-                    </select>
-                </div>
             </div>
             <hr class="mt-4" />
             <div class="row">
-                <div class="col-6 pr-0"><h3 class="mt-4 mb-4">Detalii factura</h3></div>
+                <div class="col-6 pr-0"><h4 class="mt-4 mb-4">Detalii factura</h4></div>
                 <div class="col-6 mt-4 mb-4">
-                    <h2>Produse adaugate</h2>
+                    <h4>Produse adaugate</h4>
                 </div>
-                </div>
-                <div class="row">
-                    <div class="col-6 border-right">
+            </div>
+            <div class="row">
+                <div class="col-6 border-right">
+                    <form action="">
                         <div class="row">
+
                             <div class="col-12">
 
                                 <div class="row">
                                     <div class="col-5">
                                         <label for="numeProdus" class="d-block">Nume produs</label>
 
-                                        <input type="text" id="numeProdus" name="numeProduss">
+                                        <input type="text" id="numeProdus" name="numeProdus">
                                     </div>
                                     <div class="col-3">
-                                        <label for="tentacles" class="d-block">Cantitate</label>
+                                        <label for="cantitate" class="d-block">Cantitate</label>
 
-                                        <input type="number" id="cantitate" name="cantitate"
-                                               min="1" max="10" step="1">
+                                        <input type="number" id="cantitate" name="cantitate" maxlength="4" step="1">
                                     </div>
                                 </div>
 
@@ -90,30 +81,45 @@
                                     <div class="col-3">
                                         <label for="valoare" class="d-block">Valoare</label>
 
-                                        <input type="number" id="valoare" name="valoare"
-                                               min="0" max=".1">
+                                        <input type="number"  id="valoare" name="valoare"
+                                               min="0" step=".1">
                                     </div>
                                 </div>
+                                <div class="row mt-3">
+                                    <p class="text-danger d-none" id="errorMessageProductsForm">Please fill all the fields</p>
+                                </div>
                             </div>
+
                         </div>
                         <div class="row mt-4">
                             <div class="col-4">
-                                <button class="btn btn-warning w-100">Adauga produs</button>
+                                <button type="button" class="btn btn-warning w-100" id="addProductButton">Adauga produs</button>
                             </div>
                         </div>
-
-                    </div>
-                    <div class="col-6 border border-secondary">
-                        <h5>Masca</h5>
-                        <h5>Pastile</h5>
-                        <h5>Sapun</h5>
-                    </div>
+                    </form>
+                </div>
+                <div class="col-6 border border-secondary bg-warning">
+                    <table class="table table-light border-dark">
+                        <thead>
+                            <tr>
+                                <th>Nume produs</th>
+                                <th>Cantitate</th>
+                                <th>Pret Unitar</th>
+                                <th>Valoare</th>
+                            </tr>
+                        </thead>
+                        <tbody id="productsTableBody">
+                        </tbody>
+                    </table>
                 </div>
             </div>
-        </form>
+        </div>
     </div>
 
-    
-    </body>
+    <script src="js/factura.js" asp-append-version="true"></script>
+    <script type="text/javascript">
+        
+    </script>
+</body>
 
 </html>
