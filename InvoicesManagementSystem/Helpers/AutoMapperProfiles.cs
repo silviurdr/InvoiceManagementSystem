@@ -13,6 +13,7 @@ namespace InvoiceManagementSystem.Helpers
         public AutoMapperProfiles()
         {
             CreateMap<DetaliiFacturaDto, DetaliiFactura>();
+            CreateMap<DetaliiFactura, DetaliiFacturaDto>();
             CreateMap<FacturaDto, Factura>();
             CreateMap<Factura, FacturaDto>();
         }

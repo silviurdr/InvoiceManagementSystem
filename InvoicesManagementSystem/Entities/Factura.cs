@@ -22,7 +22,7 @@ namespace InvoicesManagementSystem.Entities
 
         [Required]
         public string NumeClient { get; set; }
-        public ICollection<DetaliiFactura> DetaliiFactura { get; set; }
+        public IEnumerable<DetaliiFactura> DetaliiFactura { get; set; }
 
     }
 }

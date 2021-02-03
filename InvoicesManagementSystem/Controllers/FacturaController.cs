@@ -40,7 +40,7 @@ namespace InvoiceManagementSystem.Controllers
 
         // POST api/<FacturaController>
         [HttpPost]
-        public async Task<ActionResult<FacturaDto>> CreateEdit([FromBody] FacturaDto factura)
+        public async Task<ActionResult<Factura>> CreateEdit([FromBody] Factura factura)
         {
            /* int previousIdFactura = await _facturaRepository.getLastFacturaId();
             await _detaliiFacturaRepository.GetDetaliiFacturaAsync(previousIdFactura);*/

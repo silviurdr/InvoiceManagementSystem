@@ -38,7 +38,9 @@ namespace InvoicesManagementSystem
             services.AddScoped<IFacturaRepository, FacturaRepository>();
             services.AddScoped<IDetaliiFacturaRepository, DetaliiFacturaRepository>();
             services.AddAutoMapper(typeof(AutoMapperProfiles).Assembly);
-            services.AddControllers();
+            services.AddControllers().AddNewtonsoftJson(options =>
+    options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+);
             services.AddCors();
         }
 

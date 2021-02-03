@@ -13,7 +13,10 @@ namespace InvoicesManagementSystem.Entities
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int IdDetaliiFactura { get; set; }
 
+        
         public int IdLocatie { get; set; }
+
+        [NotMapped]
         public Locatie Locatie { get; set; }
 
         [Required]

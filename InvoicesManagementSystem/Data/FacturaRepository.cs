@@ -47,27 +47,26 @@ namespace InvoiceManagementSystem.Data
             }
         }
 
-        public async Task<FacturaDto> CreateFactura(FacturaDto factura)
+        public async Task<FacturaDto> CreateFactura(Factura factura)
         {
 
             Factura newFactura = new Factura
             {
-                IdFactura = factura.IdFactura,
                 IdLocatie = factura.IdLocatie,
                 NumarFactura = factura.NumarFactura,
                 DataFactura = factura.DataFactura,
                 NumeClient = factura.NumeClient,
             };
 
-            try { await _context.Facturi.AddAsync(newFactura); }
+            try { await _context.Facturi.AddAsync(factura); }
             catch(Exception ex)
             {
                 throw new Exception($"{nameof(factura)} could not be saved: {ex.Message}");
             }
 
+            FacturaDto facturaToReturn = _mapper.Map<Factura, FacturaDto>(newFactura);
 
-
-            return factura;
+            return facturaToReturn;
         }
 
         public void UpdateFactura(FacturaDto factura)

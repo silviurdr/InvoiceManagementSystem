@@ -11,7 +11,7 @@ namespace InvoicesManagementSystem.Interfaces
     {
         Task<Factura> GetFacturaAsync(int id);
         Task<IEnumerable<FacturaDto>> GetFacturiAsync();
-        Task<FacturaDto> CreateFactura(FacturaDto factura);
+        Task<FacturaDto> CreateFactura(Factura factura);
         void UpdateFactura(FacturaDto factura);
         void DeleteFactura(int id);
         Task<bool> SaveAllAsync();
