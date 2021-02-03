@@ -21,6 +21,6 @@ namespace InvoiceManagementSystem.DTOs
 
         [Required]
         public string NumeClient { get; set; }
-        public ICollection<DetaliiFacturaDto> DetaliiFactura { get; set; }
+        public IEnumerable<DetaliiFacturaDto> DetaliiFactura { get; set; }
     }
 }

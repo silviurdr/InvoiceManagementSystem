@@ -10,7 +10,7 @@ namespace InvoicesManagementSystem.Interfaces
     public interface IFacturaRepository
     {
         Task<Factura> GetFacturaAsync(int id);
-        Task<IEnumerable<FacturaDto>> GetFacturiAsync();
+        Task<IEnumerable<Factura>> GetFacturiAsync();
         Task<FacturaDto> CreateFactura(Factura factura);
         void UpdateFactura(FacturaDto factura);
         void DeleteFactura(int id);

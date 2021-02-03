@@ -22,13 +22,15 @@ namespace InvoiceManagementSystem.Data
             _mapper = mapper;
         }
 
-        public async Task<IEnumerable<FacturaDto>> GetFacturiAsync()
+        public async Task<IEnumerable<Factura>> GetFacturiAsync()
         {
-            var facturi = await _context.Facturi.ToListAsync();
+            return await _context.Facturi
+                .Include(f => f.DetaliiFactura)
+                .ToListAsync();
 
-            var facturiToReturn = _mapper.Map<IEnumerable<FacturaDto>>(facturi);
+ /*           var facturiToReturn = _mapper.Map<IEnumerable<FacturaDto>>(facturi);
 
-            return facturiToReturn;
+            return facturiToReturn;*/
         }
 
         public async Task<Factura> GetFacturaAsync(int id)
@@ -37,6 +39,8 @@ namespace InvoiceManagementSystem.Data
             try
             {
                 factura =  await _context.Facturi
+                    .Where(f => f.IdFactura == id)
+                    .Include(f => f.DetaliiFactura)
                     .SingleOrDefaultAsync(f => f.IdFactura == id);
 
                 return factura;
