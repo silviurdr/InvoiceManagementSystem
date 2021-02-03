@@ -1,4 +1,4 @@
-﻿const uri = 'https://localhost:5001/api/factura/';
+﻿const uri = 'https://localhost:5001/api/factura';
 let invoices = [];
 
 function getItems() {
@@ -32,6 +32,7 @@ function addItem() {
 }
 
 function deleteItem(id) {
+    console.log(`${uri}/${id}`);
     fetch(`${uri}/${id}`, {
         method: 'DELETE'
     })
@@ -91,19 +92,22 @@ function _displayItems(data) {
 
  
 
-    const button = document.createElement('button');
+    const deleteButtonTemplate = document.createElement('i');
+    deleteButtonTemplate.classList.add("fas", "fa-trash-alt", "text-warning");
+
+    const editButtonTemplate = document.createElement('i');
+    editButtonTemplate.classList.add("fas", "fa-edit", "text-warning");
 
     document.getElementsByTagName("body")[0].style.backgroundColor = "whitesmoke";
 
     data.forEach(item => {
 
+        item.id = item.idFactura;
 
-        let editButton = button.cloneNode(false);
-        editButton.innerText = 'Edit';
-        editButton.setAttribute('onclick', `displayEditForm(${item.id})`);
+        let editButton = editButtonTemplate.cloneNode(false);
+        editButton.setAttribute('onclick', `displayEditForm(${item})`);
 
-        let deleteButton = button.cloneNode(false);
-        deleteButton.innerText = 'Delete';
+        let deleteButton = deleteButtonTemplate.cloneNode(false);
         deleteButton.setAttribute('onclick', `deleteItem(${item.id})`);
 
 
@@ -123,6 +127,7 @@ function _displayItems(data) {
         let td3 = tr.insertCell(1);
         let textNode2 = document.createTextNode(item.idLocatie);
         td3.appendChild(textNode2);
+        td3.style.paddingLeft = "20px";
         td3.style.verticalAlign = "middle";
 
         let td4 = tr.insertCell(2);
@@ -138,35 +143,33 @@ function _displayItems(data) {
         let td6 = tr.insertCell(4);
         td6.appendChild(editButton);
         td6.style.verticalAlign = "middle";
+        td6.style.textAlign = "center";
+        td6.style.width = "150px";
 
         let td7 = tr.insertCell(5);
         td7.appendChild(deleteButton);
         td7.style.verticalAlign = "middle";
         td7.style.borderBottomRightRadius = "6px";
         td7.style.borderTopRightRadius = "6px";
+        td7.style.textAlign = "center";
+        td7.style.width = "150px";
 
 
     });
 
-    let allInvoices = tBody.children;
-
-    $("#invoicesTableHeader").css("background", "khaki");
-
     let allTr = document.getElementsByTagName("tr");
 
-    $("#invoices tr ").hover(function () {
+/*    $("#invoices tr ").hover(function () {
         $(this).css("background", "khaki");
     },
         function () {
             $(this).css("background", "white");
         });
-
-    console.log(allTr);
+*/
 
 
     for (tableRow of allTr) {
 
-        console.log(tableRow);
         tableRow.style.height = "70px";
     };
 

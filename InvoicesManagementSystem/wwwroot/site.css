@@ -24,3 +24,11 @@ th {
 td {
     border: 1px solid;
 }
+
+.site-header {
+    border-bottom: 4px solid khaki !important;
+}
+
+.border-3 {
+    border-width:3px !important;
+}
