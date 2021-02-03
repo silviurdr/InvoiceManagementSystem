@@ -25,6 +25,7 @@ namespace InvoicesManagementSystem
     {
 
         private IConfiguration _config;
+        readonly string _specifigOrigin = "_specificOrigin";
         public Startup(IConfiguration configuration)
         {
             _config = configuration;
@@ -41,7 +42,13 @@ namespace InvoicesManagementSystem
             services.AddControllers().AddNewtonsoftJson(options =>
     options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
 );
-            services.AddCors();
+            services.AddCors(o =>
+            {
+                o.AddPolicy("_specificOrigin",
+                p => p.AllowAnyOrigin()
+                      .AllowAnyMethod()
+                      .AllowAnyHeader());
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -52,14 +59,14 @@ namespace InvoicesManagementSystem
                 app.UseDeveloperExceptionPage();
             }
 
+            app.UseCors(_specifigOrigin);
+
+            app.UseDefaultFiles();
+            app.UseStaticFiles();
+
             app.UseHttpsRedirection();
 
             app.UseRouting();
-
-            app.UseCors(x => x.AllowAnyHeader()
-                .AllowAnyMethod()
-                .AllowCredentials()
-                .WithOrigins("https://localhost:4200"));
 
             app.UseAuthorization();
 
