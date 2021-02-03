@@ -25,7 +25,8 @@ namespace InvoiceManagementSystem.Migrations
                 name: "Facturi",
                 columns: table => new
                 {
-                    IdFactura = table.Column<int>(type: "int", nullable: false),
+                    IdFactura = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     IdLocatie = table.Column<int>(type: "int", nullable: false),
                     NumarFactura = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     DataFactura = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -46,7 +47,8 @@ namespace InvoiceManagementSystem.Migrations
                 name: "DetaliiFacturi",
                 columns: table => new
                 {
-                    IdDetaliiFactura = table.Column<int>(type: "int", nullable: false),
+                    IdDetaliiFactura = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     IdLocatie = table.Column<int>(type: "int", nullable: false),
                     NumeProdus = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Cantitate = table.Column<decimal>(type: "decimal(18,4)", nullable: false),
@@ -74,8 +76,7 @@ namespace InvoiceManagementSystem.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_DetaliiFacturi_IdFactura_IdLocatie",
                 table: "DetaliiFacturi",
-                columns: new[] { "IdFactura", "IdLocatie" },
-                unique: true);
+                columns: new[] { "IdFactura", "IdLocatie" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_DetaliiFacturi_IdLocatie",

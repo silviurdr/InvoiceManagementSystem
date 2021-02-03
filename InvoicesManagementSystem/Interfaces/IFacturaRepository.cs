@@ -1,4 +1,5 @@
-﻿using InvoicesManagementSystem.Entities;
+﻿using InvoiceManagementSystem.DTOs;
+using InvoicesManagementSystem.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,10 +10,11 @@ namespace InvoicesManagementSystem.Interfaces
     public interface IFacturaRepository
     {
         Task<Factura> GetFacturaAsync(int id);
-        Task<IEnumerable<Factura>> GetFacturiAsync();
-        Task<Factura> CreateFactura(Factura factura);
-        void UpdateFactura(Factura factura);
+        Task<IEnumerable<FacturaDto>> GetFacturiAsync();
+        Task<FacturaDto> CreateFactura(FacturaDto factura);
+        void UpdateFactura(FacturaDto factura);
         void DeleteFactura(int id);
         Task<bool> SaveAllAsync();
+        /*Task<int> getLastFacturaId();*/
     }
 }

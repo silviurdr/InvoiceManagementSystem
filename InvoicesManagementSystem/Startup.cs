@@ -1,4 +1,7 @@
+using AutoMapper;
 using InvoiceManagementSystem.Data;
+using InvoiceManagementSystem.Helpers;
+using InvoiceManagementSystem.Interfaces;
 using InvoicesManagementSystem.Data;
 using InvoicesManagementSystem.Interfaces;
 using Microsoft.AspNetCore.Builder;
@@ -26,18 +29,17 @@ namespace InvoicesManagementSystem
         {
             _config = configuration;
         }
-
         public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
             services.AddDbContextPool<InvoiceManagementContext>(options => options.UseSqlServer(_config.GetConnectionString("InvoiceManagementConnectionString")));
             services.AddScoped<IFacturaRepository, FacturaRepository>();
+            services.AddScoped<IDetaliiFacturaRepository, DetaliiFacturaRepository>();
+            services.AddAutoMapper(typeof(AutoMapperProfiles).Assembly);
             services.AddControllers();
             services.AddCors();
-
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

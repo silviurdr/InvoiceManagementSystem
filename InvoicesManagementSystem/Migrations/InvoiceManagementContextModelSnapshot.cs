@@ -22,7 +22,9 @@ namespace InvoiceManagementSystem.Migrations
             modelBuilder.Entity("InvoicesManagementSystem.Entities.DetaliiFactura", b =>
                 {
                     b.Property<int>("IdDetaliiFactura")
-                        .HasColumnType("int");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .UseIdentityColumn();
 
                     b.Property<int>("IdLocatie")
                         .HasColumnType("int");
@@ -47,8 +49,7 @@ namespace InvoiceManagementSystem.Migrations
 
                     b.HasIndex("IdLocatie");
 
-                    b.HasIndex("IdFactura", "IdLocatie")
-                        .IsUnique();
+                    b.HasIndex("IdFactura", "IdLocatie");
 
                     b.ToTable("DetaliiFacturi");
                 });
@@ -56,7 +57,9 @@ namespace InvoiceManagementSystem.Migrations
             modelBuilder.Entity("InvoicesManagementSystem.Entities.Factura", b =>
                 {
                     b.Property<int>("IdFactura")
-                        .HasColumnType("int");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .UseIdentityColumn();
 
                     b.Property<int>("IdLocatie")
                         .HasColumnType("int");
@@ -108,8 +111,8 @@ namespace InvoiceManagementSystem.Migrations
                         .IsRequired();
 
                     b.HasOne("InvoicesManagementSystem.Entities.Factura", "Factura")
-                        .WithOne("DetaliiFactura")
-                        .HasForeignKey("InvoicesManagementSystem.Entities.DetaliiFactura", "IdFactura", "IdLocatie")
+                        .WithMany("DetaliiFactura")
+                        .HasForeignKey("IdFactura", "IdLocatie")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

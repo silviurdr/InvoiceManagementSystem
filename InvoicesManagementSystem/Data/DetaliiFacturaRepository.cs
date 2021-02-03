@@ -17,15 +17,15 @@ namespace InvoiceManagementSystem.Data
         {
             _context = context;
         }
-        public async Task<DetaliiFactura> CreateDetaliiFacturaAsync(int idFactura, int idLocatie, DetaliiFactura newDetaliiFactura)
+        public async Task<DetaliiFactura> CreateDetaliiFacturaAsync(DetaliiFactura newDetaliiFactura)
         {
 
             DetaliiFactura detaliiFactura;
 
             detaliiFactura = new DetaliiFactura
             {
-                IdDetaliiFactura = idFactura,
-                IdLocatie = idLocatie,
+                IdFactura = newDetaliiFactura.IdFactura,
+                IdLocatie = newDetaliiFactura.IdLocatie,
                 NumeProdus = newDetaliiFactura.NumeProdus,
                 Cantitate = newDetaliiFactura.Cantitate,
                 PretUnitar = newDetaliiFactura.PretUnitar,
@@ -61,6 +61,15 @@ namespace InvoiceManagementSystem.Data
         public void UpdateDetaliiFactura(int idFactura, DetaliiFactura detaliiFactura)
         {
             throw new NotImplementedException();
+        }
+        public void DeleteDetaliiFactura(int detaliiFacturaId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task<bool> SaveAllAsync()
+        {
+            return await _context.SaveChangesAsync() > 0;
         }
     }
 }

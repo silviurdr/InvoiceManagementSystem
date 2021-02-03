@@ -1,4 +1,6 @@
-﻿using InvoicesManagementSystem.Data;
+﻿using AutoMapper;
+using InvoiceManagementSystem.DTOs;
+using InvoicesManagementSystem.Data;
 using InvoicesManagementSystem.Entities;
 using InvoicesManagementSystem.Interfaces;
 using Microsoft.EntityFrameworkCore;
@@ -12,23 +14,21 @@ namespace InvoiceManagementSystem.Data
     public class FacturaRepository : IFacturaRepository
     {
         private readonly InvoiceManagementContext _context;
+        private readonly IMapper _mapper;
 
-        public FacturaRepository(InvoiceManagementContext context)
+        public FacturaRepository(InvoiceManagementContext context, IMapper mapper)
         {
             _context = context;
+            _mapper = mapper;
         }
 
-        public async Task<IEnumerable<Factura>> GetFacturiAsync()
+        public async Task<IEnumerable<FacturaDto>> GetFacturiAsync()
         {
-            try
-            {
-                return await _context.Facturi
-                    .ToListAsync();
-            }
-            catch (Exception ex)
-            {
-                throw new Exception($"Could not receive entity: {ex.Message}");
-            }
+            var facturi = await _context.Facturi.ToListAsync();
+
+            var facturiToReturn = _mapper.Map<IEnumerable<FacturaDto>>(facturi);
+
+            return facturiToReturn;
         }
 
         public async Task<Factura> GetFacturaAsync(int id)
@@ -47,19 +47,30 @@ namespace InvoiceManagementSystem.Data
             }
         }
 
-        public async Task<Factura> CreateFactura(Factura factura)
+        public async Task<FacturaDto> CreateFactura(FacturaDto factura)
         {
 
-            try { await _context.Facturi.AddAsync(factura); }
+            Factura newFactura = new Factura
+            {
+                IdFactura = factura.IdFactura,
+                IdLocatie = factura.IdLocatie,
+                NumarFactura = factura.NumarFactura,
+                DataFactura = factura.DataFactura,
+                NumeClient = factura.NumeClient,
+            };
+
+            try { await _context.Facturi.AddAsync(newFactura); }
             catch(Exception ex)
             {
                 throw new Exception($"{nameof(factura)} could not be saved: {ex.Message}");
             }
 
+
+
             return factura;
         }
 
-        public void UpdateFactura(Factura factura)
+        public void UpdateFactura(FacturaDto factura)
         {
             throw new NotImplementedException();
         }
@@ -84,6 +95,12 @@ namespace InvoiceManagementSystem.Data
             }
             
         }
+
+        /*public async Task<int> GetLastFacturaId()
+        {
+            return  _context.Facturi.OrderBy(f => f.IdFactura).LastOrDefault().IdFactura;
+        }
+*/
 
         public async Task<bool> SaveAllAsync()
         {

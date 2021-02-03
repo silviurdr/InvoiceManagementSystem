@@ -6,12 +6,16 @@ using System.Threading.Tasks;
 
 namespace InvoiceManagementSystem.Interfaces
 {
-    interface IDetaliiFacturaRepository
+    public interface IDetaliiFacturaRepository
     {
         Task<DetaliiFactura> GetDetaliiFacturaAsync(int id);
 
-        Task<DetaliiFactura> CreateDetaliiFacturaAsync(int idFactura, int idLocatie, DetaliiFactura detaliiFactura);
+        Task<DetaliiFactura> CreateDetaliiFacturaAsync(DetaliiFactura detaliiFactura);
 
         void UpdateDetaliiFactura(int idFactura, DetaliiFactura detaliiFactura);
+
+        void DeleteDetaliiFactura(int detaliiFacturaId);
+
+        Task<bool> SaveAllAsync();
     }
 }

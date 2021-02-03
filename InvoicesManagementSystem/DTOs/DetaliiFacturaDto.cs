@@ -5,16 +5,15 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace InvoicesManagementSystem.Entities
+namespace InvoiceManagementSystem.DTOs
 {
-    public class DetaliiFactura
+    public class DetaliiFacturaDto
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int IdDetaliiFactura { get; set; }
 
         public int IdLocatie { get; set; }
-        public Locatie Locatie { get; set; }
 
         [Required]
         public string NumeProdus { get; set; }
@@ -26,8 +25,5 @@ namespace InvoicesManagementSystem.Entities
         public decimal Valoare { get; set; }
 
         public int IdFactura { get; set; }
-
-        [NotMapped]
-        public Factura Factura { get; set; }
     }
 }

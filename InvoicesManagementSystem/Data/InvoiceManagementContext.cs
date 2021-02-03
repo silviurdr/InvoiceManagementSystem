@@ -1,4 +1,5 @@
-﻿using InvoicesManagementSystem.Entities;
+﻿using InvoiceManagementSystem.DTOs;
+using InvoicesManagementSystem.Entities;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -19,9 +20,9 @@ namespace InvoicesManagementSystem.Data
             modelBuilder.Entity<Factura>()
                 .HasKey(f => new { f.IdFactura, f.IdLocatie });
             modelBuilder.Entity<Factura>()
-                .HasOne(f => f.DetaliiFactura)
+                .HasMany(f => f.DetaliiFactura)
                 .WithOne(d => d.Factura)
-                .HasForeignKey<DetaliiFactura>(d => new { d.IdFactura, d.IdLocatie });
+                .HasForeignKey(d => new { d.IdFactura, d.IdLocatie });
 
             modelBuilder.Entity<Factura>()
            .HasOne(f => f.Locatie)

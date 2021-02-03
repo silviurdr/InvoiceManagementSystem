@@ -1,28 +1,25 @@
-﻿using System;
+﻿using InvoicesManagementSystem.Entities;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace InvoicesManagementSystem.Entities
+namespace InvoiceManagementSystem.DTOs
 {
-    public class Factura
+    public class FacturaDto
     {
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int IdFactura { get; set; }
 
+        [Key]
+        public int IdFactura { get; set; }
         public int IdLocatie { get; set; }
-        public Locatie Locatie { get; set; }
-        
+
         [Required]
         public string NumarFactura { get; set; }
         public DateTime DataFactura { get; set; }
 
         [Required]
         public string NumeClient { get; set; }
-        public ICollection<DetaliiFactura> DetaliiFactura { get; set; }
-
+        public ICollection<DetaliiFacturaDto> DetaliiFactura { get; set; }
     }
 }

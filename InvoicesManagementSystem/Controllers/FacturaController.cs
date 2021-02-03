@@ -1,4 +1,6 @@
 ﻿using InvoiceManagementSystem.Data;
+using InvoiceManagementSystem.DTOs;
+using InvoiceManagementSystem.Interfaces;
 using InvoicesManagementSystem.Entities;
 using InvoicesManagementSystem.Interfaces;
 using Microsoft.AspNetCore.Mvc;
@@ -15,14 +17,16 @@ namespace InvoiceManagementSystem.Controllers
     public class FacturaController : ControllerBase
     {
         private readonly IFacturaRepository _facturaRepository;
+        private readonly IDetaliiFacturaRepository _detaliiFacturaRepository;
 
-        public FacturaController(IFacturaRepository facturaRepository)
+        public FacturaController(IFacturaRepository facturaRepository, IDetaliiFacturaRepository detaliiFacturaRepository)
         {
             _facturaRepository = facturaRepository;
+            _detaliiFacturaRepository = detaliiFacturaRepository;
         }
         // GET: api/<FacturaController>
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Factura>>> GetAll()
+        public async Task<ActionResult<IEnumerable<FacturaDto>>> GetAll()
         {
             return Ok(await _facturaRepository.GetFacturiAsync());
         }
@@ -36,12 +40,18 @@ namespace InvoiceManagementSystem.Controllers
 
         // POST api/<FacturaController>
         [HttpPost]
-        public async Task<ActionResult<Factura>> Create([FromBody] Factura factura)
+        public async Task<ActionResult<FacturaDto>> CreateEdit([FromBody] FacturaDto factura)
         {
-             _facturaRepository.CreateFactura(factura);
+           /* int previousIdFactura = await _facturaRepository.getLastFacturaId();
+            await _detaliiFacturaRepository.GetDetaliiFacturaAsync(previousIdFactura);*/
+            await _facturaRepository.CreateFactura(factura);
+
             await _facturaRepository.SaveAllAsync();
 
-            return factura;
+
+                return factura;
+            return BadRequest("Something went wrong!");
+            
         }
 
         // PUT api/<FacturaController>/5
