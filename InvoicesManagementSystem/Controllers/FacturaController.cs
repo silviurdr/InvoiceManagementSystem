@@ -1,4 +1,5 @@
-﻿using InvoiceManagementSystem.Data;
+﻿using AutoMapper;
+using InvoiceManagementSystem.Data;
 using InvoiceManagementSystem.DTOs;
 using InvoiceManagementSystem.Interfaces;
 using InvoicesManagementSystem.Entities;
@@ -18,11 +19,14 @@ namespace InvoiceManagementSystem.Controllers
     {
         private readonly IFacturaRepository _facturaRepository;
         private readonly IDetaliiFacturaRepository _detaliiFacturaRepository;
+        private readonly IMapper _mapper;
 
-        public FacturaController(IFacturaRepository facturaRepository, IDetaliiFacturaRepository detaliiFacturaRepository)
+        public FacturaController(IFacturaRepository facturaRepository, IDetaliiFacturaRepository detaliiFacturaRepository,
+            IMapper mapper)
         {
             _facturaRepository = facturaRepository;
             _detaliiFacturaRepository = detaliiFacturaRepository;
+            _mapper = mapper;
         }
         // GET: api/<FacturaController>
         [HttpGet]
@@ -42,29 +46,30 @@ namespace InvoiceManagementSystem.Controllers
         [HttpPost]
         public async Task<ActionResult<Factura>> CreateEdit([FromBody] Factura factura)
         {
-           /* int previousIdFactura = await _facturaRepository.getLastFacturaId();
-            await _detaliiFacturaRepository.GetDetaliiFacturaAsync(previousIdFactura);*/
-            await _facturaRepository.CreateFactura(factura);
+            if (factura.IdFactura == 0)
+            {
+                await _facturaRepository.CreateFactura(factura);
 
-            await _facturaRepository.SaveAllAsync();
-
-
-                return factura;
-            return BadRequest("Something went wrong!");
+                if (await _facturaRepository.SaveAllAsync()) return factura;
+                else return BadRequest("Unable to add factura");
+            }
             
+            else
+            {
+                var facturaFromDB = await _facturaRepository.GetFacturaAsync(factura.IdFactura);
+
+                _mapper.Map(factura, facturaFromDB);
+
+                _facturaRepository.UpdateFactura(facturaFromDB);
+
+                if (await _facturaRepository.SaveAllAsync()) return NoContent();
+
+                else
+                {
+                    return BadRequest("Unable to update factura");
+                }
+            }
         }
-
-        // PUT api/<FacturaController>/5
-    /*    [HttpPut("{idFactura}")]
-        public async Task<ActionResult<Factura>> Update(int idFactura, [FromBody] Factura newFactura)
-        {
-            var factura = _facturaRepository.GetFacturaAsync(idFactura);
-            await _facturaRepository.UpdateFactura(newFactura);
-
-            if (await _facturaRepository.SaveAllAsync()) return NoContent();
-
-            return BadRequest("Failed to update user");
-        }*/
 
         // DELETE api/<FacturaController>/5
         [HttpDelete("{idFactura}")]

@@ -27,10 +27,6 @@ namespace InvoiceManagementSystem.Data
             return await _context.Facturi
                 .Include(f => f.DetaliiFactura)
                 .ToListAsync();
-
- /*           var facturiToReturn = _mapper.Map<IEnumerable<FacturaDto>>(facturi);
-
-            return facturiToReturn;*/
         }
 
         public async Task<Factura> GetFacturaAsync(int id)
@@ -73,9 +69,11 @@ namespace InvoiceManagementSystem.Data
             return facturaToReturn;
         }
 
-        public void UpdateFactura(FacturaDto factura)
+        public void UpdateFactura(Factura factura)
         {
-            throw new NotImplementedException();
+
+            _context.Entry(factura).State = EntityState.Modified;
+
         }
 
         public void DeleteFactura(int id)
@@ -98,12 +96,6 @@ namespace InvoiceManagementSystem.Data
             }
             
         }
-
-        /*public async Task<int> GetLastFacturaId()
-        {
-            return  _context.Facturi.OrderBy(f => f.IdFactura).LastOrDefault().IdFactura;
-        }
-*/
 
         public async Task<bool> SaveAllAsync()
         {
