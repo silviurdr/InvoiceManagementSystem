@@ -12,30 +12,34 @@
 
 </head>
 <body>
+
+    <a href="factura.html">La Factura</a>
+
     <h1 class="text-center mx-0 text-black mt-4 mb-4 border  p-2 border-warning border-3 border-top-0 border-start-0 border-end-0">Invoices List</h1>
     <div class="container container-fluid" id="invoicesContainer">
         <div class="row justify-content-center">
-            <div class="col-12">
-                    <table class="table" id="apiTable">
-                        <thead id="invoicesTableHeader" class="table-dark">
-                            <tr>
-                                <th style="text-align:center; min-width:70px">ID</th>
-                                <th>Locatie</th>
-                                <th>Numar Factura</th>
-                                <th>Data Factura</th>
-                                <th align="center">Delete Factura</th>
-                                <th align="center">Edit Factura</th>
-                            </tr>
-                        </thead>
-                        <tbody id="invoices"></tbody>
-                    </table>
-                </div>
+            <div class="col-10">
+                <table class="table table-striped" id="apiTable">
+                    <thead id="invoicesTableHeader" class="table-dark">
+                        <tr>
+                            <th style="text-align:center; min-width:70px">ID</th>
+                            <th>Locatie</th>
+                            <th>Numar Factura</th>
+                            <th>Data Factura</th>
+                            <th>More Info</th>
+                            <th style="text-align:center">Edit</th>
+                            <th style="text-align:center">Delete</th>
+                        </tr>
+                    </thead>
+                    <tbody id="invoices"></tbody>
+                </table>
             </div>
         </div>
+    </div>
 
-            <script src="js/site.js" asp-append-version="true"></script>
-            <script type="text/javascript">
-                getItems();
-            </script>
+    <script src="js/site.js" asp-append-version="true"></script>
+    <script type="text/javascript">
+        getItems();
+    </script>
 </body>
 </html>

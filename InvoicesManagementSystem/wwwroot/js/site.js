@@ -41,11 +41,14 @@ function deleteItem(id) {
 }
 
 function displayEditForm(id) {
-    const item = todos.find(item => item.id === id);
+    console.log(id);
+    const item = invoices.find(item => item.id === id);
 
-    document.getElementById('edit-name').value = item.name;
+    console.log(item);
+
+/*    document.getElementById('edit-name').value = item.name;
     document.getElementById('edit-id').value = item.id;
-    document.getElementById('edit-isComplete').checked = item.isComplete;
+    document.getElementById('edit-isComplete').checked = item.isComplete;*/
     document.getElementById('editForm').style.display = 'block';
 }
 
@@ -87,33 +90,40 @@ function _displayItems(data) {
     tableInvoices.style.borderSpacing = "0 0.5em";
 
     let invoicesContainer = document.getElementById("invoicesContainer");
-    invoicesContainer.style.backgroundColor = "whitesmoke";
+    invoicesContainer.style.backgroundColor = "white";
     invoicesContainer.style.cursor = "pointer";
 
- 
+
+    const infoButtonTemplate = document.createElement('i');
+    infoButtonTemplate.classList.add("fas", "fa-info", "text-info");
 
     const deleteButtonTemplate = document.createElement('i');
-    deleteButtonTemplate.classList.add("fas", "fa-trash-alt", "text-warning");
+    deleteButtonTemplate.classList.add("fas", "fa-trash-alt");
+    deleteButtonTemplate.style.color = "#FF4E50";
 
     const editButtonTemplate = document.createElement('i');
-    editButtonTemplate.classList.add("fas", "fa-edit", "text-warning");
+    editButtonTemplate.classList.add("fas", "fa-edit", "text-dark");
 
-    document.getElementsByTagName("body")[0].style.backgroundColor = "whitesmoke";
+    document.getElementsByTagName("body")[0].style.backgroundColor = "white";
 
     data.forEach(item => {
 
         item.id = item.idFactura;
 
         let editButton = editButtonTemplate.cloneNode(false);
-        editButton.setAttribute('onclick', `displayEditForm(${item})`);
+        editButton.setAttribute('onclick', `displayEditForm(${item.id})`);
 
         let deleteButton = deleteButtonTemplate.cloneNode(false);
         deleteButton.setAttribute('onclick', `deleteItem(${item.id})`);
 
+        let infoButton = infoButtonTemplate.cloneNode(false);
+
 
         let tr = tBody.insertRow();
 
-        tBody.style.backgroundColor = "white";
+        tBody.style.backgroundColor = "whitesmoke";
+
+        var date = new Date(item.dataFactura);
 
         let td2 = tr.insertCell(0);
         let textNode = document.createTextNode(item.idFactura);
@@ -136,23 +146,29 @@ function _displayItems(data) {
         td4.style.verticalAlign = "middle";
 
         let td5 = tr.insertCell(3);
-        let textNode4 = document.createTextNode(item.dataFactura);
+        let textNode4 = document.createTextNode(date.toUTCString());
         td5.appendChild(textNode4);
         td5.style.verticalAlign = "middle";
 
         let td6 = tr.insertCell(4);
-        td6.appendChild(editButton);
+        td6.appendChild(infoButton);
         td6.style.verticalAlign = "middle";
         td6.style.textAlign = "center";
-        td6.style.width = "150px";
+        td6.style.width = "100px";
 
         let td7 = tr.insertCell(5);
-        td7.appendChild(deleteButton);
+        td7.appendChild(editButton);
         td7.style.verticalAlign = "middle";
-        td7.style.borderBottomRightRadius = "6px";
-        td7.style.borderTopRightRadius = "6px";
         td7.style.textAlign = "center";
-        td7.style.width = "150px";
+        td7.style.width = "100px";
+
+        let td8 = tr.insertCell(6);
+        td8.appendChild(deleteButton);
+        td8.style.verticalAlign = "middle";
+        td8.style.borderBottomRightRadius = "6px";
+        td8.style.borderTopRightRadius = "6px";
+        td8.style.textAlign = "center";
+        td8.style.width = "100px";
 
 
     });
