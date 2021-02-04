@@ -10,12 +10,14 @@ function getItems() {
 
 
 function deleteItem(id) {
-    console.log(`${uri}/${id}`);
-    fetch(`${uri}/${id}`, {
-        method: 'DELETE'
-    })
-        .then(() => getItems())
-        .catch(error => console.error('Unable to delete item.', error));
+
+    if (confirm("Are you sure you want to delete this factura?")) {
+        fetch(`${uri}/${id}`, {
+            method: 'DELETE'
+        })
+            .then(() => getItems())
+            .catch(error => console.error('Unable to delete item.', error));
+    }
 }
 
 
@@ -61,9 +63,8 @@ function _displayItems(data) {
     invoicesContainer.style.backgroundColor = "white";
     invoicesContainer.style.cursor = "pointer";
 
-
-    const infoButtonTemplate = document.createElement('i');
-    infoButtonTemplate.classList.add("fas", "fa-info", "text-info");
+ /*   const infoButtonTemplate = document.createElement('i');
+    infoButtonTemplate.classList.add("fas", "fa-info", "text-info");*/
 
     const deleteButtonTemplate = document.createElement('i');
     deleteButtonTemplate.classList.add("fas", "fa-trash-alt");
@@ -84,7 +85,7 @@ function _displayItems(data) {
         let deleteButton = deleteButtonTemplate.cloneNode(false);
         deleteButton.setAttribute('onclick', `deleteItem(${item.id})`);
 
-        let infoButton = infoButtonTemplate.cloneNode(false);
+        /*let infoButton = infoButtonTemplate.cloneNode(false);*/
 
 
         let tr = tBody.insertRow();
@@ -118,19 +119,19 @@ function _displayItems(data) {
         td5.appendChild(textNode4);
         td5.style.verticalAlign = "middle";
 
-        let td6 = tr.insertCell(4);
+/*        let td6 = tr.insertCell(4);
         td6.appendChild(infoButton);
         td6.style.verticalAlign = "middle";
         td6.style.textAlign = "center";
-        td6.style.width = "100px";
+        td6.style.width = "100px";*/
 
-        let td7 = tr.insertCell(5);
+        let td7 = tr.insertCell(4);
         td7.appendChild(editButton);
         td7.style.verticalAlign = "middle";
         td7.style.textAlign = "center";
         td7.style.width = "100px";
 
-        let td8 = tr.insertCell(6);
+        let td8 = tr.insertCell(5);
         td8.appendChild(deleteButton);
         td8.style.verticalAlign = "middle";
         td8.style.borderBottomRightRadius = "6px";

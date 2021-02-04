@@ -178,8 +178,7 @@ addProductButton.addEventListener("click", function () {
     let valoare = document.getElementById('valoare').value;
     
 
-    if (numeProdus == null || numeProdus == "", cantitate == null || cantitate == "",
-        pretUnitar == null || pretUnitar == "", valoare == null || valoare == "") {
+    if (!numeProdus || !cantitate || !pretUnitar || !valoare) {
         errorMessageProductsForm.classList.remove("d-none");
         errorMessageProductsForm.style.visibility = true
         return false;
