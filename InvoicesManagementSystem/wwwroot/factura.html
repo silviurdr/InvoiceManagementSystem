@@ -13,12 +13,18 @@
 
     <h1 class="text-center mx-0 text-black mt-4 mb-4 border  p-2 border-warning border-3 border-top-0 border-start-0 border-end-0">Factura</h1>
 
-    <div class="container col-10 bg-light mt-4 p-0">
-        <div class="bg-dark p-2"></div>
-        <div class="bg-warning p-4"></div>
+    <div class="container col-10 mt-4 p-0 pb-4">
 
-        <div class="row p-4 mt-4">
-            <div class="row">
+        <div class="row mb-3 justify-content-center">
+            <div class="text-right">
+                <a href="index.html" class="btn btn-dark mr-0" style="float:right">Go Back</a>
+            </div>
+        </div>
+
+        <div class="bg-light row">
+            <div class="bg-dark p-2"></div>
+            <div class="bg-warning p-4"></div>
+            <div class="row pt-5">
                 <div class="col-md-6">
                     <label for="numarFactura" class="form-label">Numar factura</label>
                     <input type="text" class="form-control" id="numarFactura">
@@ -50,7 +56,7 @@
                     <h4>Produse adaugate</h4>
                 </div>
             </div>
-            <div class="row">
+            <div class="row pb-3">
                 <div class="col-6 border-right">
                     <form action="">
                         <div class="row">
@@ -98,7 +104,7 @@
                     </form>
                 </div>
                 <div class="col-6 border border-secondary bg-warning">
-                    <table class="table table-light border-dark mt-2">
+                    <table class="table table-light border-dark mt-2" id="productsTable">
                         <thead>
                             <tr>
                                 <th>Nume produs</th>
@@ -112,14 +118,15 @@
                     </table>
                 </div>
             </div>
-        </div>
-        <div class="container-fluid p-3 mt-4 mb-2 text-center align-items-center border border-secondary">
-            <div class="mx-0 buttons-container text-center" style="margin: 0 auto">
-                <button type="submit" class="btn btn-secondary btn-lg">Save Factura</button>
-                <button class="btn btn-outline-danger btn-lg" id="cancelFacturaButton" onclick="goPrev()">Cancel</button>
-            </div>
+            <div class="container-fluid p-3 mt-4 mb-2 text-center align-items-center border border-secondary">
+                <div class="mx-0 buttons-container text-center" style="margin: 0 auto">
+                    <button type="submit" class="btn btn-secondary btn-lg" id="createFactura" onclick="addItem();">Save Factura</button>
+                    <button class="btn btn-outline-danger btn-lg" id="cancelFacturaButton" onclick="goPrev()">Cancel</button>
+                </div>
 
+            </div>
         </div>
+       
     </div>
 
     <script src="js/factura.js" asp-append-version="true"></script>

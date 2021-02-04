@@ -12,7 +12,6 @@ namespace InvoiceManagementSystem.DTOs
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int IdFactura { get; set; }
         public int IdLocatie { get; set; }
 
         [Required]
@@ -21,6 +20,6 @@ namespace InvoiceManagementSystem.DTOs
 
         [Required]
         public string NumeClient { get; set; }
-        public IEnumerable<DetaliiFacturaDto> DetaliiFactura { get; set; }
+        public IEnumerable<DetaliiFactura> DetaliiFactura { get; set; }
     }
 }

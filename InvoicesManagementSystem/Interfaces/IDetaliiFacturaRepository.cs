@@ -1,4 +1,5 @@
-﻿using InvoicesManagementSystem.Entities;
+﻿using InvoiceManagementSystem.DTOs;
+using InvoicesManagementSystem.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,7 +11,7 @@ namespace InvoiceManagementSystem.Interfaces
     {
         Task<DetaliiFactura> GetDetaliiFacturaAsync(int id);
 
-        Task<DetaliiFactura> CreateDetaliiFacturaAsync(DetaliiFactura detaliiFactura);
+        Task<DetaliiFacturaDto> CreateDetaliiFacturaAsync(DetaliiFactura detaliiFactura);
 
         void UpdateDetaliiFactura(int idFactura, DetaliiFactura detaliiFactura);
 

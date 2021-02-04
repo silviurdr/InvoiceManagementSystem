@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace InvoiceManagementSystem.Migrations
 {
     [DbContext(typeof(InvoiceManagementContext))]
-    [Migration("20210202195015_InitialMigration")]
+    [Migration("20210204023621_InitialMigration")]
     partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

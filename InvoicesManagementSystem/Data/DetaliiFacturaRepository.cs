@@ -1,4 +1,6 @@
-﻿using InvoiceManagementSystem.Interfaces;
+﻿using AutoMapper;
+using InvoiceManagementSystem.DTOs;
+using InvoiceManagementSystem.Interfaces;
 using InvoicesManagementSystem.Data;
 using InvoicesManagementSystem.Entities;
 using Microsoft.EntityFrameworkCore;
@@ -12,17 +14,19 @@ namespace InvoiceManagementSystem.Data
     public class DetaliiFacturaRepository : IDetaliiFacturaRepository
     {
         private readonly InvoiceManagementContext _context;
+        private readonly IMapper _mapper;
 
-        public DetaliiFacturaRepository(InvoiceManagementContext context)
+        public DetaliiFacturaRepository(InvoiceManagementContext context, IMapper mapper)
         {
             _context = context;
+            _mapper = mapper;
         }
-        public async Task<DetaliiFactura> CreateDetaliiFacturaAsync(DetaliiFactura newDetaliiFactura)
+        public async Task<DetaliiFacturaDto> CreateDetaliiFacturaAsync(DetaliiFactura newDetaliiFactura)
         {
 
-            DetaliiFactura detaliiFactura;
+            DetaliiFacturaDto detaliiFactura;
 
-            detaliiFactura = new DetaliiFactura
+            detaliiFactura = new DetaliiFacturaDto
             {
                 IdFactura = newDetaliiFactura.IdFactura,
                 IdLocatie = newDetaliiFactura.IdLocatie,
@@ -33,7 +37,7 @@ namespace InvoiceManagementSystem.Data
 
             };
 
-            try { await _context.AddAsync(detaliiFactura); }
+            try { await _context.AddAsync(_mapper.Map<DetaliiFacturaDto, DetaliiFactura>(detaliiFactura)); }
             catch (Exception ex)
             {
                 throw new Exception($"{nameof(detaliiFactura)} could not be saved: {ex.Message}");

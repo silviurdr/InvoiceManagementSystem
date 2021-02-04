@@ -47,7 +47,7 @@ namespace InvoiceManagementSystem.Data
             }
         }
 
-        public async Task<FacturaDto> CreateFactura(Factura factura)
+        public async Task<FacturaDto> CreateFactura(FacturaDto factura)
         {
 
             Factura newFactura = new Factura
@@ -56,9 +56,10 @@ namespace InvoiceManagementSystem.Data
                 NumarFactura = factura.NumarFactura,
                 DataFactura = factura.DataFactura,
                 NumeClient = factura.NumeClient,
+                DetaliiFactura = factura.DetaliiFactura
             };
 
-            try { await _context.Facturi.AddAsync(factura); }
+            try { await _context.Facturi.AddAsync(_mapper.Map<FacturaDto, Factura>(factura)); }
             catch(Exception ex)
             {
                 throw new Exception($"{nameof(factura)} could not be saved: {ex.Message}");

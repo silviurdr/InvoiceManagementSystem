@@ -4,7 +4,69 @@ let addProductButton = document.getElementById("addProductButton");
 let productsTableBody = document.getElementById("productsTableBody");
 let errorMessageProductsForm = document.getElementById("errorMessageProductsForm");
 let cancelFacturaButton = document.getElementById("cancelFacturaButton");
+let createFacturaButton = document.getElementById("createFacturaButton"); 
 
+const numeProdusCell = 0;
+const cantitateCell = 1;
+const pretUnitarCell = 2;
+const valoareCell = 3;
+
+
+function addItem() {
+
+    const productsTable = document.getElementById("productsTable");
+
+    if (productsTable.rows.length == 1) {
+        console.log("afaraaaa");
+        return false;
+    }
+
+    const newIdLocatie = document.getElementById('idLocatie').value;
+    const newNumarFactura = document.getElementById('numarFactura').value;
+    const newNumeClient = document.getElementById('numeClient').value;
+    const newDataFactura = document.getElementById('dataFactura').value;
+
+
+    const newProducts = [];
+
+    let productsNumber = productsTable.rows.length - 1;
+
+    
+
+    for (let i = 1; i < productsNumber + 1; i++) {
+        let product = {
+            idLocatie: document.getElementById('idLocatie').value,
+            numeProdus : productsTable.rows[i].cells[numeProdusCell].innerText,
+            cantitate: productsTable.rows[i].cells[cantitateCell].innerText,
+            pretUnitar: productsTable.rows[i].cells[pretUnitarCell].innerText,
+            valoare: productsTable.rows[i].cells[valoareCell].innerText,
+            idFactura: 44
+        }
+        newProducts.push(product);
+    }
+
+    const factura = {
+        idLocatie : newIdLocatie,
+        numarFactura: newNumarFactura,
+        numeClient: newNumeClient,
+        dataFactura: newDataFactura,
+        detaliiFactura: newProducts
+    };
+
+    console.log(factura);
+
+    fetch(uri, {
+        method: 'POST',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(factura)
+    })
+        .then(res => res.text())          // convert to plain text
+        .then(text => console.log(text)) 
+        .catch(error => console.error('Unable to add item.', error));
+}
 
 
 addProductButton.addEventListener("click", function () {
