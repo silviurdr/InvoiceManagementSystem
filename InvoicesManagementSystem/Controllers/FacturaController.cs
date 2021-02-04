@@ -46,8 +46,8 @@ namespace InvoiceManagementSystem.Controllers
         [HttpPost]
         public async Task<ActionResult<FacturaDto>> CreateEdit([FromBody] FacturaDto factura)
         {
- /*           if (factura.IdFactura == 0)
-            {*/
+            if (factura.IdFactura == 0)
+            {
                 await _facturaRepository.CreateFactura(factura);
 
 /*                foreach (DetaliiFacturaDto newDetaliuFactura in factura.DetaliiFactura.ToList())
@@ -57,9 +57,9 @@ namespace InvoiceManagementSystem.Controllers
 */
                 if (await _facturaRepository.SaveAllAsync()) return factura;
                 else return BadRequest("Unable to add factura");
-   /*         }*/
-            
-/*            else
+            }
+
+            else
             {
                 var facturaFromDB = await _facturaRepository.GetFacturaAsync(factura.IdFactura);
 
@@ -73,7 +73,7 @@ namespace InvoiceManagementSystem.Controllers
                 {
                     return BadRequest("Unable to update factura");
                 }
-            }*/
+            }
         }
 
         // DELETE api/<FacturaController>/5

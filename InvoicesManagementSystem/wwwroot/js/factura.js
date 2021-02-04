@@ -12,12 +12,28 @@ const pretUnitarCell = 2;
 const valoareCell = 3;
 
 
-function addItem() {
+
+function checkParameters() {
+    let params = window.location.search.slice(1).split("&");
+    let idFactura = params[0].split("=")[1];
+
+    if (idFactura != undefined) {
+
+        fetch(uri + "/" + idFactura)
+            .then(response => response.json())
+            .then(data => addValuesToInputs(data))
+            .catch(error => console.error('Unable to get items.', error));
+
+        let numarFactura = document.getElementById("numarFactura");
+        numarFactura.value = "aafasfsa";
+    }
+}
+
+function prepareFacturaForSubmit() {
 
     const productsTable = document.getElementById("productsTable");
 
     if (productsTable.rows.length == 1) {
-        console.log("afaraaaa");
         return false;
     }
 
@@ -31,12 +47,12 @@ function addItem() {
 
     let productsNumber = productsTable.rows.length - 1;
 
-    
+
 
     for (let i = 1; i < productsNumber + 1; i++) {
         let product = {
             idLocatie: document.getElementById('idLocatie').value,
-            numeProdus : productsTable.rows[i].cells[numeProdusCell].innerText,
+            numeProdus: productsTable.rows[i].cells[numeProdusCell].innerText,
             cantitate: productsTable.rows[i].cells[cantitateCell].innerText,
             pretUnitar: productsTable.rows[i].cells[pretUnitarCell].innerText,
             valoare: productsTable.rows[i].cells[valoareCell].innerText,
@@ -46,12 +62,67 @@ function addItem() {
     }
 
     const factura = {
-        idLocatie : newIdLocatie,
+        idLocatie: newIdLocatie,
         numarFactura: newNumarFactura,
         numeClient: newNumeClient,
         dataFactura: newDataFactura,
         detaliiFactura: newProducts
     };
+
+    return factura;
+}
+
+function addValuesToInputs(factura) {
+
+    let facturaProducts = factura.detaliiFactura;
+    let numberOfProducts = facturaProducts.length;
+    console.log(factura.idFactura);
+    const productsTable = document.getElementById("productsTable");
+
+    for (let i = 0; i < numberOfProducts; i++) {
+
+
+        let tr = productsTable.insertRow();
+        let td1 = tr.insertCell(0);
+        let textNode1 = document.createTextNode(facturaProducts[i]['numeProdus']);
+        td1.appendChild(textNode1);
+
+        let td2 = tr.insertCell(1);
+        let textNode2 = document.createTextNode(facturaProducts[i]['cantitate']);
+        td2.appendChild(textNode2);
+
+        let td3 = tr.insertCell(2);
+        let textNode3 = document.createTextNode(facturaProducts[i]['pretUnitar']);
+        td3.appendChild(textNode3);
+
+        let td4 = tr.insertCell(3);
+        let textNode4 = document.createTextNode(facturaProducts[i]['valoare']);
+        td4.appendChild(textNode4);
+
+    }
+
+
+    let numarFactura = document.getElementById("numarFactura");
+    numarFactura.value = factura.numarFactura;
+
+    let numeClient = document.getElementById("numeClient");
+    numeClient.value = factura.numeClient;
+
+    let dataFactura = document.getElementById("dataFactura");
+    let dataFacturaFromDB = factura.dataFactura.slice(0, 10);
+    dataFactura.value = dataFacturaFromDB;
+
+    let idLocatie = document.getElementById("idLocatie");
+    idLocatie.value = factura.idLocatie;
+
+    document.getElementById("createFactura").setAttribute('onclick', 'updateItem( " ' + factura.idFactura+ ' " )');
+
+}
+
+
+function addItem() {
+
+    let factura = prepareFacturaForSubmit()
 
     console.log(factura);
 
@@ -64,8 +135,33 @@ function addItem() {
         body: JSON.stringify(factura)
     })
         .then(res => res.text())          // convert to plain text
-        .then(text => console.log(text)) 
+        .then(text => console.log(text))
         .catch(error => console.error('Unable to add item.', error));
+
+}
+
+function updateItem() {
+
+    let factura = prepareFacturaForSubmit()
+
+    console.log(factura);
+
+    fetch(uri, {
+        method: 'POST',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(factura)
+    })
+        .then(res => res.text())          // convert to plain text
+        .then(text => console.log(text))
+        .then(() => {
+            facturaUpdatedMessage.classList.remove("d-none");
+            facturaUpdatedMessage.style.visibility = true;
+        })
+        .catch(error => console.error('Unable to add item.', error));
+
 }
 
 

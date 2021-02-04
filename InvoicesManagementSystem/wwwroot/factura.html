@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="css/site.css" />
     <script src="https://kit.fontawesome.com/a414b1a528.js" crossorigin="anonymous"></script>
 </head>
-<body>
+<body onload="checkParameters()">
 
     <h1 class="text-center mx-0 text-black mt-4 mb-4 border  p-2 border-warning border-3 border-top-0 border-start-0 border-end-0">Factura</h1>
 
@@ -118,7 +118,8 @@
                     </table>
                 </div>
             </div>
-            <div class="container-fluid p-3 mt-4 mb-2 text-center align-items-center border border-secondary">
+            <div class="container-fluid p-3 mt-4 mb-5 text-center align-items-center border border-secondary">
+                <div class="text-center text-success d-none mb-4" id="facturaUpdatedMessage">Factura successfully updated!</div>
                 <div class="mx-0 buttons-container text-center" style="margin: 0 auto">
                     <button type="submit" class="btn btn-secondary btn-lg" id="createFactura" onclick="addItem();">Save Factura</button>
                     <button class="btn btn-outline-danger btn-lg" id="cancelFacturaButton" onclick="goPrev()">Cancel</button>

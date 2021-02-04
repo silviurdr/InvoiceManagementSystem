@@ -18,16 +18,11 @@ function deleteItem(id) {
         .catch(error => console.error('Unable to delete item.', error));
 }
 
-function displayEditForm(id) {
-    console.log(id);
-    const item = invoices.find(item => item.id === id);
 
-    console.log(item);
+function goToEditFactura(idFactura) {
 
-/*    document.getElementById('edit-name').value = item.name;
-    document.getElementById('edit-id').value = item.id;
-    document.getElementById('edit-isComplete').checked = item.isComplete;*/
-    document.getElementById('editForm').style.display = 'block';
+    console.log(idFactura);
+    window.location.href = "factura.html?idFactura=" + idFactura;
 }
 
 function updateItem() {
@@ -53,11 +48,6 @@ function updateItem() {
 
     return false;
 }
-
-function closeInput() {
-    document.getElementById('editForm').style.display = 'none';
-}
-
 
 function _displayItems(data) {
     const tBody = document.getElementById('invoices');
@@ -89,7 +79,7 @@ function _displayItems(data) {
         item.id = item.idFactura;
 
         let editButton = editButtonTemplate.cloneNode(false);
-        editButton.setAttribute('onclick', `displayEditForm(${item.id})`);
+        editButton.setAttribute('onclick', `goToEditFactura(${item.id})`);
 
         let deleteButton = deleteButtonTemplate.cloneNode(false);
         deleteButton.setAttribute('onclick', `deleteItem(${item.id})`);
