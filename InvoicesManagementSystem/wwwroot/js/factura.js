@@ -17,6 +17,7 @@ function checkParameters() {
     let params = window.location.search.slice(1).split("&");
     let idFactura = params[0].split("=")[1];
 
+
     if (idFactura != undefined) {
 
         fetch(uri + "/" + idFactura)
@@ -24,8 +25,6 @@ function checkParameters() {
             .then(data => addValuesToInputs(data))
             .catch(error => console.error('Unable to get items.', error));
 
-        let numarFactura = document.getElementById("numarFactura");
-        numarFactura.value = "aafasfsa";
     }
 }
 
@@ -37,6 +36,7 @@ function prepareFacturaForSubmit() {
         return false;
     }
 
+    const oldIdFactura = document.getElementById('idFactura').value;
     const newIdLocatie = document.getElementById('idLocatie').value;
     const newNumarFactura = document.getElementById('numarFactura').value;
     const newNumeClient = document.getElementById('numeClient').value;
@@ -62,6 +62,7 @@ function prepareFacturaForSubmit() {
     }
 
     const factura = {
+        idFactura: oldIdFactura,
         idLocatie: newIdLocatie,
         numarFactura: newNumarFactura,
         numeClient: newNumeClient,
@@ -78,6 +79,9 @@ function addValuesToInputs(factura) {
     let numberOfProducts = facturaProducts.length;
     console.log(factura.idFactura);
     const productsTable = document.getElementById("productsTable");
+
+    let idFactura = document.getElementById("idFactura");
+    idFactura.value = factura.idFactura;
 
     for (let i = 0; i < numberOfProducts; i++) {
 
@@ -99,6 +103,7 @@ function addValuesToInputs(factura) {
         let textNode4 = document.createTextNode(facturaProducts[i]['valoare']);
         td4.appendChild(textNode4);
 
+
     }
 
 
@@ -115,6 +120,7 @@ function addValuesToInputs(factura) {
     let idLocatie = document.getElementById("idLocatie");
     idLocatie.value = factura.idLocatie;
 
+
     document.getElementById("createFactura").setAttribute('onclick', 'updateItem( " ' + factura.idFactura+ ' " )');
 
 }
@@ -122,9 +128,8 @@ function addValuesToInputs(factura) {
 
 function addItem() {
 
-    let factura = prepareFacturaForSubmit()
+    let factura = prepareFacturaForSubmit();
 
-    console.log(factura);
 
     fetch(uri, {
         method: 'POST',
@@ -134,8 +139,8 @@ function addItem() {
         },
         body: JSON.stringify(factura)
     })
-        .then(res => res.text())          // convert to plain text
-        .then(text => console.log(text))
+        .then(response => response.json())
+        .then(data =>  window.location.href="index.html")
         .catch(error => console.error('Unable to add item.', error));
 
 }
@@ -150,16 +155,16 @@ function updateItem() {
         method: 'POST',
         headers: {
             'Accept': 'application/json',
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
         },
-        body: JSON.stringify(factura)
+        body: JSON.stringify(factura),
+        success: function () {
+            successmessage = 'Data was succesfully captured';
+        },
     })
         .then(res => res.text())          // convert to plain text
         .then(text => console.log(text))
-        .then(() => {
-            facturaUpdatedMessage.classList.remove("d-none");
-            facturaUpdatedMessage.style.visibility = true;
-        })
+        .then(data => window.location.href = "index.html")
         .catch(error => console.error('Unable to add item.', error));
 
 }

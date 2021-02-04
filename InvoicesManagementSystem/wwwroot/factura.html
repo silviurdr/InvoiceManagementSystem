@@ -24,10 +24,12 @@
         <div class="bg-light row">
             <div class="bg-dark p-2"></div>
             <div class="bg-warning p-4"></div>
+            <form  method="post">
             <div class="row pt-5">
                 <div class="col-md-6">
                     <label for="numarFactura" class="form-label">Numar factura</label>
                     <input type="text" class="form-control" id="numarFactura">
+                    <input type="text" hidden id="idFactura" value="0" />
                 </div>
                 <div class="col-md-6">
                     <label for="numeClient" class="form-label">Nume client</label>
@@ -121,11 +123,12 @@
             <div class="container-fluid p-3 mt-4 mb-5 text-center align-items-center border border-secondary">
                 <div class="text-center text-success d-none mb-4" id="facturaUpdatedMessage">Factura successfully updated!</div>
                 <div class="mx-0 buttons-container text-center" style="margin: 0 auto">
-                    <button type="submit" class="btn btn-secondary btn-lg" id="createFactura" onclick="addItem();">Save Factura</button>
+                    <button type="submit" class="btn btn-secondary btn-lg" id="createFactura" onclick="addItem()">Save Factura</button>
                     <button class="btn btn-outline-danger btn-lg" id="cancelFacturaButton" onclick="goPrev()">Cancel</button>
                 </div>
 
             </div>
+            </form>
         </div>
        
     </div>
