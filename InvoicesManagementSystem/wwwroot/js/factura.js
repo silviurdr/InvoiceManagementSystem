@@ -176,6 +176,14 @@ addProductButton.addEventListener("click", function () {
     let cantitate = document.getElementById('cantitate').value;
     let pretUnitar = document.getElementById('pretUnitar').value;
     let valoare = document.getElementById('valoare').value;
+
+    const deleteButtonTemplate = document.createElement('i');
+    deleteButtonTemplate.classList.add("fas", "fa-trash-alt");
+    deleteButtonTemplate.style.color = "#FF4E50";
+    deleteButtonTemplate.style.cursor = "pointer";
+
+    let deleteButton = deleteButtonTemplate.cloneNode(false);
+    deleteButton.setAttribute('onclick', "deleteProduct(this)");
     
 
     if (!numeProdus || !cantitate || !pretUnitar || !valoare) {
@@ -208,7 +216,20 @@ addProductButton.addEventListener("click", function () {
     td4.appendChild(textNode4);
     document.getElementById('valoare').value = "";
 
+    let td5 = tr.insertCell(4);
+    td5.appendChild(deleteButton);
+    td5.style.verticalAlign = "middle";
+    td5.style.textAlign = "center";
+
 });
+
+
+function deleteProduct(x) {
+    if (confirm("Are you sure you want to delete this factura?")) {
+
+        document.getElementById("productsTable").deleteRow(x.parentElement.parentElement.rowIndex);
+    };
+}
 
 
 function addProducts() {
