@@ -25,6 +25,7 @@ namespace InvoicesManagementSystem
     {
 
         private IConfiguration _config;
+        private readonly InvoiceManagementContext _context;
         readonly string _specifigOrigin = "_specificOrigin";
         public Startup(IConfiguration configuration)
         {
@@ -74,6 +75,16 @@ namespace InvoicesManagementSystem
             {
                 endpoints.MapControllers();
             });
+
+            using (var serviceScope = app.ApplicationServices
+            .GetRequiredService<IServiceScopeFactory>()
+            .CreateScope())
+            {
+                using (var context = serviceScope.ServiceProvider.GetService<InvoiceManagementContext>())
+                {
+                    context.Database.Migrate();
+                }
+            }
         }
     }
 }

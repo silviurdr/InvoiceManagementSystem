@@ -1,4 +1,4 @@
-﻿const uri = 'https://localhost:5001/api/factura';
+﻿const uri = 'api/factura';
 let invoices = [];
 
 function getItems() {
@@ -24,7 +24,7 @@ function deleteItem(id) {
 function goToEditFactura(idFactura) {
 
     console.log(idFactura);
-    window.location.href = "factura.html?idFactura=" + idFactura;
+    window.location.replace("factura.html?idFactura=" + idFactura);
 }
 
 function updateItem() {

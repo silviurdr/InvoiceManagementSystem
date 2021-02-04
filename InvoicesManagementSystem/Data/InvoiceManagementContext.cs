@@ -38,6 +38,21 @@ namespace InvoicesManagementSystem.Data
            .HasForeignKey(d => d.IdLocatie)
            .OnDelete(DeleteBehavior.Restrict);
 
+            modelBuilder.Entity<Locatie>().HasData(
+                new Locatie()
+                {
+                    IdLocatie = 1,
+                    Nume = "Brasov",
+                    Adresa = "Strada Muresenilor"
+                },
+                new Locatie()
+                {
+                    IdLocatie = 2,
+                    Nume = "Bucuresti",
+                    Adresa = "Strada Balcescu"
+                }
+           );
+
         }
 
         public DbSet<Factura> Facturi { get; set; }

@@ -1,4 +1,4 @@
-﻿const uri = 'https://localhost:5001/api/factura';
+﻿const uri = 'api/factura';
 
 let addProductButton = document.getElementById("addProductButton"); 
 let productsTableBody = document.getElementById("productsTableBody");
@@ -30,7 +30,15 @@ function checkParameters() {
 
 function prepareFacturaForSubmit() {
 
+
     const productsTable = document.getElementById("productsTable");
+
+    let numarFactura = document.getElementById("numarFactura").value;
+
+    if (!numarFactura) {
+        console.log("nu ee factura");
+        return
+    }
 
     if (productsTable.rows.length == 1) {
         return false;
@@ -83,6 +91,14 @@ function addValuesToInputs(factura) {
     let idFactura = document.getElementById("idFactura");
     idFactura.value = factura.idFactura;
 
+    const deleteButtonTemplate = document.createElement('i');
+    deleteButtonTemplate.classList.add("fas", "fa-trash-alt");
+    deleteButtonTemplate.style.color = "#FF4E50";
+    deleteButtonTemplate.style.cursor = "pointer";
+
+    let deleteButton = deleteButtonTemplate.cloneNode(false);
+    deleteButton.setAttribute('onclick', "deleteProduct(this)");
+
     for (let i = 0; i < numberOfProducts; i++) {
 
 
@@ -102,6 +118,11 @@ function addValuesToInputs(factura) {
         let td4 = tr.insertCell(3);
         let textNode4 = document.createTextNode(facturaProducts[i]['valoare']);
         td4.appendChild(textNode4);
+
+        let td5 = tr.insertCell(4);
+        td5.appendChild(deleteButton);
+        td5.style.verticalAlign = "middle";
+        td5.style.textAlign = "center";
 
 
     }
@@ -130,6 +151,8 @@ function addItem() {
 
     let factura = prepareFacturaForSubmit();
 
+    if (!factura.numarFactura || !factura.dataFactura || !factura.numeClient || factura.idLocatie === "Alege un Id de locatie") return;
+    console.log(factura.idLocatie.value === "Alege un Id de locatie");
 
     fetch(uri, {
         method: 'POST',
@@ -140,7 +163,7 @@ function addItem() {
         body: JSON.stringify(factura)
     })
         .then(response => response.json())
-        .then(data =>  window.location.href="index.html")
+        .then(data =>  window.location.replace("index.html"))
         .catch(error => console.error('Unable to add item.', error));
 
 }
@@ -148,6 +171,8 @@ function addItem() {
 function updateItem() {
 
     let factura = prepareFacturaForSubmit()
+
+    if (!factura.numarFactura || !factura.dataFactura || !factura.numeClient || factura.idLocatie === "Alege un Id de locatie") return;
 
     console.log(factura);
 
@@ -158,13 +183,14 @@ function updateItem() {
             'Content-Type': 'application/json',
         },
         body: JSON.stringify(factura),
-        success: function () {
+/*        success: function () {
             successmessage = 'Data was succesfully captured';
-        },
+            window.location.replace("index.html")
+        },*/
     })
         .then(res => res.text())          // convert to plain text
         .then(text => console.log(text))
-        .then(data => window.location.href = "index.html")
+        .then(data => window.location.replace("index.html"))
         .catch(error => console.error('Unable to add item.', error));
 
 }
@@ -243,5 +269,5 @@ function addProducts() {
 }
 
 function goPrev() {
-    window.history.back();
+    window.location.replace("index.html");
 }

@@ -27,23 +27,23 @@
                 <div class="row pt-5">
                     <div class="col-md-6">
                         <label for="numarFactura" class="form-label">Numar factura</label>
-                        <input type="text" class="form-control" id="numarFactura">
+                        <input type="text" class="form-control" id="numarFactura" required />
                         <input type="text" hidden id="idFactura" value="0" />
                     </div>
                     <div class="col-md-6">
                         <label for="numeClient" class="form-label">Nume client</label>
-                        <input type="text" class="form-control" id="numeClient">
+                        <input type="text" class="form-control" id="numeClient" required />
                     </div>
                 </div>
                 <div class="row mt-4">
                     <div class="col-md-6">
                         <label for="dataFactura" class="form-label">Data factura</label>
-                        <input type="date" class="form-control" id="dataFactura">
+                        <input type="date" class="form-control" id="dataFactura" required />
                     </div>
                     <div class="col-3">
                         <label for="idLocatie" class="form-label">Id Locatie</label>
-                        <select class="form-select form-select-sm" aria-label=".form-select-sm example" id="idLocatie">
-                            <option selected>Alege un Id de locatie</option>
+                        <select class="form-select form-select-sm" aria-label=".form-select-sm example" id="idLocatie" required >
+                            <option selected disabled>Alege un Id de locatie</option>
                             <option value="1">1</option>
                             <option value="2">2</option>
                             <option value="3">3</option>
@@ -59,7 +59,6 @@
                 </div>
                 <div class="row pb-3">
                     <div class="col-6 border-right">
-                        <form action="">
                             <div class="row">
 
                                 <div class="col-12">
@@ -102,7 +101,7 @@
                                     <button type="button" class="btn btn-warning w-100" id="addProductButton">Adauga produs</button>
                                 </div>
                             </div>
-                        </form>
+
                     </div>
                     <div class="col-6 border border-secondary bg-light">
                         <table class="table table-light border-dark mt-2" id="productsTable">
@@ -123,7 +122,7 @@
                 <div class="container p-3 mt-4 mb-4 text-center align-items-center">
                     <div class="text-center text-success d-none mb-4" id="facturaUpdatedMessage">Factura successfully updated!</div>
                     <div class="mx-0 buttons-container text-center ml-5 mr-5" style="margin: 0 auto">
-                        <button type="submit" class="btn btn-warning btn-lg" style="margin-right: 20px" id="createFactura" onclick="addItem()">Save Factura</button>
+                        <button type="button" class="btn btn-warning btn-lg" style="margin-right: 20px" id="createFactura" onclick="addItem()">Save Factura</button>
                         <button class="btn btn-outline-dark btn-lg" id="cancelFacturaButton" onclick="goPrev()">Cancel</button>
                     </div>
 
