@@ -63,9 +63,6 @@ function _displayItems(data) {
     invoicesContainer.style.backgroundColor = "white";
     invoicesContainer.style.cursor = "pointer";
 
- /*   const infoButtonTemplate = document.createElement('i');
-    infoButtonTemplate.classList.add("fas", "fa-info", "text-info");*/
-
     const deleteButtonTemplate = document.createElement('i');
     deleteButtonTemplate.classList.add("fas", "fa-trash-alt");
     deleteButtonTemplate.style.color = "#FF4E50";
@@ -119,39 +116,24 @@ function _displayItems(data) {
         td5.appendChild(textNode4);
         td5.style.verticalAlign = "middle";
 
-/*        let td6 = tr.insertCell(4);
-        td6.appendChild(infoButton);
+        let td6 = tr.insertCell(4);
+        td6.appendChild(editButton);
         td6.style.verticalAlign = "middle";
         td6.style.textAlign = "center";
-        td6.style.width = "100px";*/
+        td6.style.width = "100px";
 
-        let td7 = tr.insertCell(4);
-        td7.appendChild(editButton);
+        let td7 = tr.insertCell(5);
+        td7.appendChild(deleteButton);
         td7.style.verticalAlign = "middle";
+        td7.style.borderBottomRightRadius = "6px";
+        td7.style.borderTopRightRadius = "6px";
         td7.style.textAlign = "center";
         td7.style.width = "100px";
-
-        let td8 = tr.insertCell(5);
-        td8.appendChild(deleteButton);
-        td8.style.verticalAlign = "middle";
-        td8.style.borderBottomRightRadius = "6px";
-        td8.style.borderTopRightRadius = "6px";
-        td8.style.textAlign = "center";
-        td8.style.width = "100px";
 
 
     });
 
     let allTr = document.getElementsByTagName("tr");
-
-/*    $("#invoices tr ").hover(function () {
-        $(this).css("background", "khaki");
-    },
-        function () {
-            $(this).css("background", "white");
-        });
-*/
-
 
     for (tableRow of allTr) {
 

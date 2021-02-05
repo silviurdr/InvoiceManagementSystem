@@ -47,11 +47,6 @@ namespace InvoiceManagementSystem.Controllers
             {
                 await _facturaRepository.CreateFactura(factura);
 
-                /*                foreach (DetaliiFacturaDto newDetaliuFactura in factura.DetaliiFactura.ToList())
-                                {
-                                   await _detaliiFacturaRepository.CreateDetaliiFacturaAsync(newDetaliuFactura);
-                                }
-                */
                 if (await _facturaRepository.SaveAllAsync()) return factura;
                 else return BadRequest("Unable to add factura");
             }

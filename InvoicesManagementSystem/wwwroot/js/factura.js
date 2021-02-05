@@ -11,8 +11,6 @@ const cantitateCell = 1;
 const pretUnitarCell = 2;
 const valoareCell = 3;
 
-
-
 function checkParameters() {
     let params = window.location.search.slice(1).split("&");
     let idFactura = params[0].split("=")[1];
@@ -39,8 +37,15 @@ function prepareFacturaForSubmit() {
         return
     }
 
+    let errorMessageProductsMissing = document.getElementById("errorMessageProductsMissing");
+
     if (productsTable.rows.length == 1) {
+        errorMessageProductsMissing.style.visibility = false;
+        errorMessageProductsMissing.classList.remove("d-none");
         return false;
+    } else {
+        errorMessageProductsMissing.style.visibility = true;
+        errorMessageProductsMissing.classList.add("d-none");
     }
 
     const oldIdFactura = document.getElementById('idFactura').value;
@@ -100,6 +105,7 @@ function addValuesToInputs(factura) {
         deleteButton.setAttribute('id', "product" + factura.detaliiFactura[i].idDetaliiFactura);
 
         let tr = productsTable.insertRow();
+
         let td1 = tr.insertCell(0);
         let textNode1 = document.createTextNode(facturaProducts[i]['numeProdus']);
         td1.appendChild(textNode1);
@@ -138,12 +144,52 @@ function addValuesToInputs(factura) {
     document.getElementById("createFactura").setAttribute('onclick', 'updateItem( " ' + factura.idFactura + ' " )');
 }
 
+function toggleErrorMessage(facturaProperty, errorMessage) {
+    if (!facturaProperty.value) {
+        errorMessage.style.visibility = true;
+        errorMessage.classList.remove("d-none");
+    } else {
+        errorMessage.style.visibility = false;
+        errorMessage.classList.add("d-none");
+    }
+}
+
+
 function addItem() {
 
     let factura = prepareFacturaForSubmit();
 
+    let errorMessageNumarFactura = document.getElementById("errorMessageNumarFactura");
+    let errorMessageDataFactura = document.getElementById("errorMessageDataFactura");
+    let errorMessageNumeClient = document.getElementById("errorMessageNumeClient");
+    let errorMessageIdLocatie = document.getElementById("errorMessageIdLocatie");
+
+    let productsTable = document.getElementById("productsTable");
+    
+    let numarFactura = document.getElementById("numarFactura");
+    let dataFactura = document.getElementById("dataFactura");
+    let numeClient = document.getElementById("numeClient");
+    let idLocatie = document.getElementById("idLocatie");
+
+
+
+    toggleErrorMessage(numarFactura, errorMessageNumarFactura);
+    toggleErrorMessage(dataFactura, errorMessageDataFactura);
+    toggleErrorMessage(numeClient, errorMessageNumeClient);
+
+    if (idLocatie.value == "Alege un Id de locatie") {
+        errorMessageIdLocatie.style.visibility = true;
+        errorMessageIdLocatie.classList.remove("d-none");
+    } else {
+        errorMessageIdLocatie.style.visibility = false;
+        errorMessageIdLocatie.classList.add("d-none");
+    }
+
     if (!factura.numarFactura || !factura.dataFactura || !factura.numeClient || factura.idLocatie === "Alege un Id de locatie") return;
-    console.log(factura.idLocatie.value === "Alege un Id de locatie");
+    else if (productsTable.rows.length == 1)
+    {
+
+    };
 
     fetch(uri + "factura", {
         method: 'POST',
@@ -156,7 +202,6 @@ function addItem() {
         .then(response => response.json())
         .then(data => window.location.replace("index.html"))
         .catch(error => console.error('Unable to add item.', error));
-
 }
 
 function updateItem() {
@@ -203,9 +248,13 @@ addProductButton.addEventListener("click", function () {
 
     if (!numeProdus || !cantitate || !pretUnitar || !valoare) {
         errorMessageProductsForm.classList.remove("d-none");
-        errorMessageProductsForm.style.visibility = true
+        errorMessageProductsForm.style.visibility = true;
         return false;
     }
+
+    let errorMessageProductsMissing = document.getElementById("errorMessageProductsMissing");
+    errorMessageProductsMissing.style.visibility = false;
+    errorMessageProductsMissing.classList.add("d-none");
 
     errorMessageProductsForm.classList.add("d-none");
 
@@ -265,5 +314,6 @@ function addProducts() {
 }
 
 function goPrev() {
+    event.preventDefault()
     window.location.replace("index.html");
 }
