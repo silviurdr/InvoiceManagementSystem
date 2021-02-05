@@ -50,8 +50,16 @@ namespace InvoiceManagementSystem.Controllers
 
         // DELETE api/<DetaliiFactura>/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public async Task<ActionResult> Delete(int id)
         {
+            _detaliiFacturaRepository.DeleteDetaliiFactura(id);
+
+            if (await _detaliiFacturaRepository.SaveAllAsync())
+            {
+                return Ok();
+            }
+
+            else return BadRequest("Failed to update detaliiFactura");
         }
     }
 }

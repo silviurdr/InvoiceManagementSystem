@@ -1,10 +1,10 @@
-﻿const uri = 'api/factura';
+﻿const uri = 'api/';
 
-let addProductButton = document.getElementById("addProductButton"); 
+let addProductButton = document.getElementById("addProductButton");
 let productsTableBody = document.getElementById("productsTableBody");
 let errorMessageProductsForm = document.getElementById("errorMessageProductsForm");
 let cancelFacturaButton = document.getElementById("cancelFacturaButton");
-let createFacturaButton = document.getElementById("createFacturaButton"); 
+let createFacturaButton = document.getElementById("createFacturaButton");
 
 const numeProdusCell = 0;
 const cantitateCell = 1;
@@ -20,11 +20,10 @@ function checkParameters() {
 
     if (idFactura != undefined) {
 
-        fetch(uri + "/" + idFactura)
+        fetch(uri + "factura/" + idFactura)
             .then(response => response.json())
             .then(data => addValuesToInputs(data))
             .catch(error => console.error('Unable to get items.', error));
-
     }
 }
 
@@ -54,8 +53,6 @@ function prepareFacturaForSubmit() {
     const newProducts = [];
 
     let productsNumber = productsTable.rows.length - 1;
-
-
 
     for (let i = 1; i < productsNumber + 1; i++) {
         let product = {
@@ -96,11 +93,11 @@ function addValuesToInputs(factura) {
     deleteButtonTemplate.style.color = "#FF4E50";
     deleteButtonTemplate.style.cursor = "pointer";
 
-    let deleteButton = deleteButtonTemplate.cloneNode(false);
-    deleteButton.setAttribute('onclick', "deleteProduct(this)");
-
     for (let i = 0; i < numberOfProducts; i++) {
 
+        let deleteButton = deleteButtonTemplate.cloneNode(false);
+        deleteButton.setAttribute('onclick', "deleteProduct(this)");
+        deleteButton.setAttribute('id', "product" + factura.detaliiFactura[i].idDetaliiFactura);
 
         let tr = productsTable.insertRow();
         let td1 = tr.insertCell(0);
@@ -123,10 +120,7 @@ function addValuesToInputs(factura) {
         td5.appendChild(deleteButton);
         td5.style.verticalAlign = "middle";
         td5.style.textAlign = "center";
-
-
     }
-
 
     let numarFactura = document.getElementById("numarFactura");
     numarFactura.value = factura.numarFactura;
@@ -141,11 +135,8 @@ function addValuesToInputs(factura) {
     let idLocatie = document.getElementById("idLocatie");
     idLocatie.value = factura.idLocatie;
 
-
-    document.getElementById("createFactura").setAttribute('onclick', 'updateItem( " ' + factura.idFactura+ ' " )');
-
+    document.getElementById("createFactura").setAttribute('onclick', 'updateItem( " ' + factura.idFactura + ' " )');
 }
-
 
 function addItem() {
 
@@ -154,7 +145,7 @@ function addItem() {
     if (!factura.numarFactura || !factura.dataFactura || !factura.numeClient || factura.idLocatie === "Alege un Id de locatie") return;
     console.log(factura.idLocatie.value === "Alege un Id de locatie");
 
-    fetch(uri, {
+    fetch(uri + "factura", {
         method: 'POST',
         headers: {
             'Accept': 'application/json',
@@ -163,7 +154,7 @@ function addItem() {
         body: JSON.stringify(factura)
     })
         .then(response => response.json())
-        .then(data =>  window.location.replace("index.html"))
+        .then(data => window.location.replace("index.html"))
         .catch(error => console.error('Unable to add item.', error));
 
 }
@@ -176,25 +167,23 @@ function updateItem() {
 
     console.log(factura);
 
-    fetch(uri, {
+    fetch(uri + "factura", {
         method: 'POST',
         headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json',
         },
         body: JSON.stringify(factura),
-/*        success: function () {
-            successmessage = 'Data was succesfully captured';
-            window.location.replace("index.html")
-        },*/
+        /*        success: function () {
+                    successmessage = 'Data was succesfully captured';
+                    window.location.replace("index.html")
+                },*/
     })
         .then(res => res.text())          // convert to plain text
         .then(text => console.log(text))
         .then(data => window.location.replace("index.html"))
         .catch(error => console.error('Unable to add item.', error));
-
 }
-
 
 addProductButton.addEventListener("click", function () {
 
@@ -210,7 +199,7 @@ addProductButton.addEventListener("click", function () {
 
     let deleteButton = deleteButtonTemplate.cloneNode(false);
     deleteButton.setAttribute('onclick', "deleteProduct(this)");
-    
+
 
     if (!numeProdus || !cantitate || !pretUnitar || !valoare) {
         errorMessageProductsForm.classList.remove("d-none");
@@ -219,7 +208,6 @@ addProductButton.addEventListener("click", function () {
     }
 
     errorMessageProductsForm.classList.add("d-none");
-
 
     let tr = productsTableBody.insertRow();
     let td1 = tr.insertCell(0);
@@ -236,7 +224,7 @@ addProductButton.addEventListener("click", function () {
     let textNode3 = document.createTextNode(pretUnitar);
     td3.appendChild(textNode3);
     document.getElementById('pretUnitar').value = "";
-    
+
     let td4 = tr.insertCell(3);
     let textNode4 = document.createTextNode(valoare);
     td4.appendChild(textNode4);
@@ -251,12 +239,20 @@ addProductButton.addEventListener("click", function () {
 
 
 function deleteProduct(x) {
-    if (confirm("Are you sure you want to delete this factura?")) {
+    
+    if (confirm("Are you sure you want to delete this product?")) {
+        let idProductToDelete = x.id;
 
         document.getElementById("productsTable").deleteRow(x.parentElement.parentElement.rowIndex);
+        if (idProductToDelete) {
+            let numberIdProductToDelete = idProductToDelete.match(/\d+/)[0];
+            fetch(`${uri}detaliifactura/${numberIdProductToDelete}`, {
+                method: "DELETE",
+            })
+                .catch(error => console.error('Unable to add item.', error));       
+        }  
     };
 }
-
 
 function addProducts() {
 

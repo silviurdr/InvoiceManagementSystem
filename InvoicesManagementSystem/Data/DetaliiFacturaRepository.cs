@@ -5,6 +5,7 @@ using InvoicesManagementSystem.Data;
 using InvoicesManagementSystem.Entities;
 using Microsoft.EntityFrameworkCore;
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace InvoiceManagementSystem.Data
@@ -66,7 +67,19 @@ namespace InvoiceManagementSystem.Data
         }
         public void DeleteDetaliiFactura(int detaliiFacturaId)
         {
-            throw new NotImplementedException();
+            var detaliiFacturaToRemove = _context.DetaliiFacturi
+                .FirstOrDefault(df => df.IdDetaliiFactura == detaliiFacturaId);
+
+            if (detaliiFacturaToRemove == null)
+            {
+                throw new ArgumentNullException($"{nameof(detaliiFacturaToRemove)} entity must not be null");
+            }
+
+            try { _context.DetaliiFacturi.Remove(detaliiFacturaToRemove); }
+            catch (Exception ex)
+            {
+                throw new Exception($"{nameof(detaliiFacturaToRemove)} entity could not be deleted: {ex.Message}");
+            }
         }
 
         public async Task<bool> SaveAllAsync()
