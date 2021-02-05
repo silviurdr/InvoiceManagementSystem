@@ -177,6 +177,8 @@ function addItem() {
         errorMessageIdLocatie.classList.add("d-none");
     }
 
+    if (!factura) return;
+
     if (!factura.numarFactura || !factura.dataFactura || !factura.numeClient || factura.idLocatie === "Alege un Id de locatie") return;
     else if (productsTable.rows.length == 1)
     {
@@ -199,6 +201,8 @@ function addItem() {
 function updateItem() {
 
     let factura = prepareFacturaForSubmit()
+
+    if (!factura) return;
 
     if (!factura.numarFactura || !factura.dataFactura || !factura.numeClient || factura.idLocatie === "Alege un Id de locatie") return;
 
@@ -232,7 +236,7 @@ addProductButton.addEventListener("click", function () {
     deleteButton.setAttribute('onclick', "deleteProduct(this)");
 
 
-    if (!numeProdus || !cantitate || !pretUnitar || !valoare) {
+    if (!numeProdus || !cantitate || !pretUnitar) {
         errorMessageProductsForm.classList.remove("d-none");
         errorMessageProductsForm.style.visibility = true;
         return false;
@@ -261,7 +265,7 @@ addProductButton.addEventListener("click", function () {
     document.getElementById('pretUnitar').value = "";
 
     let td4 = tr.insertCell(3);
-    let textNode4 = document.createTextNode(valoare);
+    let textNode4 = document.createTextNode((parseFloat(cantitate) * parseFloat(pretUnitar)).toFixed(2));
     td4.appendChild(textNode4);
     document.getElementById('valoare').value = "";
 
