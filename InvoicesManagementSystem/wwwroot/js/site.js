@@ -8,7 +8,6 @@ function getItems() {
         .catch(error => console.error('Unable to get items.', error));
 }
 
-
 function deleteItem(id) {
 
     if (confirm("Are you sure you want to delete this factura?")) {
@@ -20,10 +19,8 @@ function deleteItem(id) {
     }
 }
 
-
 function goToEditFactura(idFactura) {
 
-    console.log(idFactura);
     window.location.replace("factura.html?idFactura=" + idFactura);
 }
 
@@ -47,7 +44,6 @@ function updateItem() {
         .catch(error => console.error('Unable to update item.', error));
 
     closeInput();
-
     return false;
 }
 
@@ -82,9 +78,6 @@ function _displayItems(data) {
         let deleteButton = deleteButtonTemplate.cloneNode(false);
         deleteButton.setAttribute('onclick', `deleteItem(${item.id})`);
 
-        /*let infoButton = infoButtonTemplate.cloneNode(false);*/
-
-
         let tr = tBody.insertRow();
 
         tBody.style.backgroundColor = "whitesmoke";
@@ -98,7 +91,6 @@ function _displayItems(data) {
         td2.style.textAlign = "center";
         td2.style.borderTopLeftRadius = "6px";
         td2.style.borderBottomLeftRadius = "6px";
- 
 
         let td3 = tr.insertCell(1);
         let textNode2 = document.createTextNode(item.idLocatie);
@@ -129,14 +121,11 @@ function _displayItems(data) {
         td7.style.borderTopRightRadius = "6px";
         td7.style.textAlign = "center";
         td7.style.width = "100px";
-
-
     });
 
     let allTr = document.getElementsByTagName("tr");
 
     for (tableRow of allTr) {
-
         tableRow.style.height = "70px";
     };
 

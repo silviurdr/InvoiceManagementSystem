@@ -18,19 +18,6 @@ namespace InvoiceManagementSystem.Controllers
         {
             _detaliiFacturaRepository = detaliiFacturaRepository;
         }
-        // GET: api/<DetaliiFactura>
-        [HttpGet]
-        public IEnumerable<string> Get()
-        {
-            return new string[] { "value1", "value2" };
-        }
-
-        // GET api/<DetaliiFactura>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
-        {
-            return "value";
-        }
 
         // POST api/<DetaliiFactura>
         [HttpPost]
@@ -42,12 +29,6 @@ namespace InvoiceManagementSystem.Controllers
             else return BadRequest("Unable to add factura");
         }
 
-        // PUT api/<DetaliiFactura>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
-        }
-
         // DELETE api/<DetaliiFactura>/5
         [HttpDelete("{id}")]
         public async Task<ActionResult> Delete(int id)
@@ -57,9 +38,7 @@ namespace InvoiceManagementSystem.Controllers
             if (await _detaliiFacturaRepository.SaveAllAsync())
             {
                 return Ok();
-            }
-
-            else return BadRequest("Failed to update detaliiFactura");
+            } else return BadRequest("Failed to update detaliiFactura");
         }
     }
 }

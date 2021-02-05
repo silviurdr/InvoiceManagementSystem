@@ -5,17 +5,17 @@ let productsTableBody = document.getElementById("productsTableBody");
 let errorMessageProductsForm = document.getElementById("errorMessageProductsForm");
 let cancelFacturaButton = document.getElementById("cancelFacturaButton");
 let createFacturaButton = document.getElementById("createFacturaButton");
+let locatiiCount;
 
 const numeProdusCell = 0;
 const cantitateCell = 1;
 const pretUnitarCell = 2;
 const valoareCell = 3;
 
+
 function checkParameters() {
     let params = window.location.search.slice(1).split("&");
     let idFactura = params[0].split("=")[1];
-
-
     if (idFactura != undefined) {
 
         fetch(uri + "factura/" + idFactura)
@@ -27,13 +27,11 @@ function checkParameters() {
 
 function prepareFacturaForSubmit() {
 
-
     const productsTable = document.getElementById("productsTable");
 
     let numarFactura = document.getElementById("numarFactura").value;
 
     if (!numarFactura) {
-        console.log("nu ee factura");
         return
     }
 
@@ -53,7 +51,6 @@ function prepareFacturaForSubmit() {
     const newNumarFactura = document.getElementById('numarFactura').value;
     const newNumeClient = document.getElementById('numeClient').value;
     const newDataFactura = document.getElementById('dataFactura').value;
-
 
     const newProducts = [];
 
@@ -79,7 +76,6 @@ function prepareFacturaForSubmit() {
         dataFactura: newDataFactura,
         detaliiFactura: newProducts
     };
-
     return factura;
 }
 
@@ -87,7 +83,6 @@ function addValuesToInputs(factura) {
 
     let facturaProducts = factura.detaliiFactura;
     let numberOfProducts = facturaProducts.length;
-    console.log(factura.idFactura);
     const productsTable = document.getElementById("productsTable");
 
     let idFactura = document.getElementById("idFactura");
@@ -154,7 +149,6 @@ function toggleErrorMessage(facturaProperty, errorMessage) {
     }
 }
 
-
 function addItem() {
 
     let factura = prepareFacturaForSubmit();
@@ -170,8 +164,6 @@ function addItem() {
     let dataFactura = document.getElementById("dataFactura");
     let numeClient = document.getElementById("numeClient");
     let idLocatie = document.getElementById("idLocatie");
-
-
 
     toggleErrorMessage(numarFactura, errorMessageNumarFactura);
     toggleErrorMessage(dataFactura, errorMessageDataFactura);
@@ -210,8 +202,6 @@ function updateItem() {
 
     if (!factura.numarFactura || !factura.dataFactura || !factura.numeClient || factura.idLocatie === "Alege un Id de locatie") return;
 
-    console.log(factura);
-
     fetch(uri + "factura", {
         method: 'POST',
         headers: {
@@ -219,10 +209,6 @@ function updateItem() {
             'Content-Type': 'application/json',
         },
         body: JSON.stringify(factura),
-        /*        success: function () {
-                    successmessage = 'Data was succesfully captured';
-                    window.location.replace("index.html")
-                },*/
     })
         .then(res => res.text())          // convert to plain text
         .then(text => console.log(text))
@@ -285,7 +271,6 @@ addProductButton.addEventListener("click", function () {
     td5.style.textAlign = "center";
 
 });
-
 
 function deleteProduct(x) {
     
