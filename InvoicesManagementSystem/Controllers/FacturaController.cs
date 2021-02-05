@@ -1,13 +1,10 @@
 ﻿using AutoMapper;
-using InvoiceManagementSystem.Data;
 using InvoiceManagementSystem.DTOs;
 using InvoiceManagementSystem.Interfaces;
 using InvoicesManagementSystem.Entities;
 using InvoicesManagementSystem.Interfaces;
 using Microsoft.AspNetCore.Mvc;
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 
@@ -50,11 +47,11 @@ namespace InvoiceManagementSystem.Controllers
             {
                 await _facturaRepository.CreateFactura(factura);
 
-/*                foreach (DetaliiFacturaDto newDetaliuFactura in factura.DetaliiFactura.ToList())
-                {
-                   await _detaliiFacturaRepository.CreateDetaliiFacturaAsync(newDetaliuFactura);
-                }
-*/
+                /*                foreach (DetaliiFacturaDto newDetaliuFactura in factura.DetaliiFactura.ToList())
+                                {
+                                   await _detaliiFacturaRepository.CreateDetaliiFacturaAsync(newDetaliuFactura);
+                                }
+                */
                 if (await _facturaRepository.SaveAllAsync()) return factura;
                 else return BadRequest("Unable to add factura");
             }

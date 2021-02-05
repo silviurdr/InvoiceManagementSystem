@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace InvoiceManagementSystem.DTOs
 {
@@ -23,7 +19,6 @@ namespace InvoiceManagementSystem.DTOs
         public decimal PretUnitar { get; set; }
         [Column(TypeName = "decimal(18,4)")]
         public decimal Valoare { get; set; }
-
         public int IdFactura { get; set; }
     }
 }

@@ -1,14 +1,9 @@
-﻿using InvoiceManagementSystem.DTOs;
-using InvoicesManagementSystem.Entities;
+﻿using InvoicesManagementSystem.Entities;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace InvoicesManagementSystem.Data
 {
-    public class InvoiceManagementContext: DbContext
+    public class InvoiceManagementContext : DbContext
     {
         public InvoiceManagementContext(DbContextOptions<InvoiceManagementContext> options)
             : base(options)
@@ -34,7 +29,7 @@ namespace InvoicesManagementSystem.Data
 
             modelBuilder.Entity<DetaliiFactura>()
            .HasOne(d => d.Locatie)
-           .WithMany(l=> l.DetaliiFacturi)
+           .WithMany(l => l.DetaliiFacturi)
            .HasForeignKey(d => d.IdLocatie)
            .OnDelete(DeleteBehavior.Restrict);
 
@@ -52,7 +47,6 @@ namespace InvoicesManagementSystem.Data
                     Adresa = "Strada Balcescu"
                 }
            );
-
         }
 
         public DbSet<Factura> Facturi { get; set; }

@@ -6,18 +6,10 @@ using InvoicesManagementSystem.Data;
 using InvoicesManagementSystem.Interfaces;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
-using Microsoft.OpenApi.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace InvoicesManagementSystem
 {
@@ -25,7 +17,6 @@ namespace InvoicesManagementSystem
     {
 
         private IConfiguration _config;
-        private readonly InvoiceManagementContext _context;
         readonly string _specifigOrigin = "_specificOrigin";
         public Startup(IConfiguration configuration)
         {
@@ -41,8 +32,8 @@ namespace InvoicesManagementSystem
             services.AddScoped<IDetaliiFacturaRepository, DetaliiFacturaRepository>();
             services.AddAutoMapper(typeof(AutoMapperProfiles).Assembly);
             services.AddControllers().AddNewtonsoftJson(options =>
-    options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
-);
+                options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+                );
             services.AddCors(o =>
             {
                 o.AddPolicy("_specificOrigin",

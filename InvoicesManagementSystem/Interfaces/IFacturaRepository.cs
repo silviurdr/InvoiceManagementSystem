@@ -1,8 +1,6 @@
 ﻿using InvoiceManagementSystem.DTOs;
 using InvoicesManagementSystem.Entities;
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace InvoicesManagementSystem.Interfaces
@@ -15,6 +13,5 @@ namespace InvoicesManagementSystem.Interfaces
         void UpdateFactura(Factura factura);
         void DeleteFactura(int id);
         Task<bool> SaveAllAsync();
-        /*Task<int> getLastFacturaId();*/
     }
 }

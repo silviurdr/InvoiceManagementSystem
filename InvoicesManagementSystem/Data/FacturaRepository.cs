@@ -34,14 +34,14 @@ namespace InvoiceManagementSystem.Data
             Factura factura;
             try
             {
-                factura =  await _context.Facturi
+                factura = await _context.Facturi
                     .Where(f => f.IdFactura == id)
                     .Include(f => f.DetaliiFactura)
                     .SingleOrDefaultAsync(f => f.IdFactura == id);
 
                 return factura;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 throw new Exception($"Couldn't receive entitie : {ex.Message}");
             }
@@ -60,7 +60,7 @@ namespace InvoiceManagementSystem.Data
             };
 
             try { await _context.Facturi.AddAsync(_mapper.Map<FacturaDto, Factura>(factura)); }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 throw new Exception($"{nameof(factura)} could not be saved: {ex.Message}");
             }
@@ -79,7 +79,7 @@ namespace InvoiceManagementSystem.Data
 
         public void DeleteFactura(int id)
         {
-            var factura =  _context.Facturi
+            var factura = _context.Facturi
                 .FirstOrDefault(f => f.IdFactura == id);
 
             if (factura == null)
@@ -89,20 +89,17 @@ namespace InvoiceManagementSystem.Data
 
             try
             {
-                 _context.Facturi.Remove(factura);
+                _context.Facturi.Remove(factura);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 throw new Exception($"{nameof(factura)} entity could not be deleted: {ex.Message}");
             }
-            
         }
 
         public async Task<bool> SaveAllAsync()
         {
             return await _context.SaveChangesAsync() > 0;
         }
-
-
     }
 }
